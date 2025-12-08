@@ -1,0 +1,26 @@
+# 1. FORCE WWW & HTTPS (Domain Consolidation)
+# This stops you from having split traffic between "http" and "https"
+http://itassetsolutions.com/* https://www.itassetsolutions.com/:splat  301!
+https://itassetsolutions.com/* https://www.itassetsolutions.com/:splat  301!
+
+# 2. FIX OLD BROKEN LINKS (301 Permanent Redirects)
+# Even though we added routes to App.tsx, these server-side redirects are faster
+# and better for Google SEO. They tell Google "This page has permanently moved."
+
+# Disposition -> Enterprise ITAD
+/services/it-asset-disposition   /services/enterprise-itad  301
+/services/it-asset-management    /services/enterprise-itad  301
+/services/e-waste-recycling      /services/enterprise-itad  301
+
+# Recycling -> Value Recovery
+/services/hardware-recycling     /services/it-asset-value-recovery  301
+
+# Destruction -> Secure Data Destruction
+/services/data-destruction       /services/secure-data-destruction  301
+/services/secure-data-wiping     /services/secure-data-destruction  301
+/services/hard-drive-shredding   /services/secure-data-destruction  301
+
+# 3. SINGLE PAGE APP (SPA) FALLBACK
+# This is the most critical line. It tells Netlify:
+# "If the user asks for a page I don't know, send them to index.html and let React handle it."
+/* /index.html  200

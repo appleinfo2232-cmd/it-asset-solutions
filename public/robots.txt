@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Block search parameters to prevent duplicate content issues
+Disallow: /*?*
+Disallow: /*&ptr=*
+Disallow: /private/
+Disallow: /admin/
+
+# Point bots to the correct sitemap location
+Sitemap: https://www.itassetsolutions.com/sitemap.xml

@@ -1,0 +1,404 @@
+import React from 'react';
+import {
+  ArrowRight,
+  Shield,
+  DollarSign,
+  Award,
+  Star,
+  Zap,
+  Laptop,
+  Monitor,
+  Server,
+  HardDrive,
+  Router,
+  Smartphone,
+  Printer,
+  Database,
+  Cpu,
+  Package,
+  CheckCircle,
+  TrendingUp,
+  Lock,
+  Recycle
+} from 'lucide-react';
+
+interface HeroProps {
+  userRole?: string; // New prop for personalization
+}
+
+const Hero: React.FC<HeroProps> = ({ userRole }) => {
+  // Define personalized content based on userRole
+  let mainHeadlineContent = (
+    <>
+      <span className="text-transparent bg-clip-text bg-gradient-to-r from-curious-blue via-mountain-meadow to-java">Secure, Compliant, and Profitable </span>
+      <br />
+      <span className="text-transparent bg-clip-text bg-gradient-to-r from-curious-blue via-mountain-meadow to-java">
+        IT Asset Lifecycle Management
+      </span>
+    </>
+  );
+  let subHeadline = (
+    <>
+      We transform your retired technology into strategic value through secure data destruction, 
+      compliant recycling, and maximum value recovery programs.
+      <br />Trusted by 675+ Enterprise Clients
+    </>
+  );
+  let ctaText = "Get Your Free ITAD Assessment";
+  let ctaIcon = <Shield className="w-7 h-7" />;
+  let trustBadges = [
+    { icon: Shield, label: 'NIST 800-88 Secure', color: 'text-curious-blue', bgColor: 'from-curious-blue/30 to-mountain-meadow/25' },
+    { icon: CheckCircle, label: 'EPA Compliant', color: 'text-mountain-meadow', bgColor: 'from-mountain-meadow/30 to-curious-blue/25' },
+    { icon: Star, label: '675+ Clients', color: 'text-java', bgColor: 'from-java/30 to-mountain-meadow/25' }
+  ];
+
+  // Personalization logic based on userRole
+  if (userRole === 'cfo') {
+    mainHeadlineContent = (
+      <>
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-curious-blue via-mountain-meadow to-java">Maximize ROI from Your</span>
+        <br />
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-curious-blue via-mountain-meadow to-java">
+          Retired IT Assets
+        </span>
+      </>
+    );
+    subHeadline = (
+      <>
+        Unlock hidden capital and turn IT asset disposition into a revenue-generating opportunity.
+        Our programs are designed to boost your bottom line.
+      </>
+    );
+    ctaText = "Calculate Your ITAD ROI";
+    ctaIcon = <DollarSign className="w-7 h-7" />;
+    trustBadges = [
+      { icon: DollarSign, label: '$12.5M+ Recovered', color: 'text-curious-blue', bgColor: 'from-curious-blue/30 to-mountain-meadow/25' },
+      { icon: TrendingUp, label: '85% Avg Recovery', color: 'text-java', bgColor: 'from-java/30 to-mountain-meadow/25' },
+      { icon: CheckCircle, label: 'Immediate Capital', color: 'text-mountain-meadow', bgColor: 'from-mountain-meadow/30 to-curious-blue/25' }
+    ];
+  } else if (userRole === 'itdirector') {
+    mainHeadlineContent = (
+      <>
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-curious-blue via-mountain-meadow to-java">Streamline Your IT Asset</span>
+        <br />
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-curious-blue via-mountain-meadow to-java">
+          Disposition Process
+        </span>
+      </>
+    );
+    subHeadline = (
+      <>
+        Simplify complex ITAD logistics with our secure, efficient, and fully documented solutions.
+        Focus on innovation, we'll handle the rest.
+      </>
+    );
+    ctaText = "Explore Managed ITAD Services";
+    ctaIcon = <Laptop className="w-7 h-7" />;
+    trustBadges = [
+      { icon: Zap, label: '7-Day Turnaround', color: 'text-java', bgColor: 'from-java/30 to-mountain-meadow/25' },
+      { icon: Shield, label: '100% Secure Process', color: 'text-curious-blue', bgColor: 'from-curious-blue/30 to-mountain-meadow/25' },
+      { icon: CheckCircle, label: 'Full Documentation', color: 'text-mountain-meadow', bgColor: 'from-mountain-meadow/30 to-curious-blue/25' }
+    ];
+  } else if (userRole === 'compliance') {
+    mainHeadlineContent = (
+      <>
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-curious-blue via-mountain-meadow to-java">Guaranteed Compliance for</span>
+        <br />
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-curious-blue via-mountain-meadow to-java">
+          IT Asset Disposition
+        </span>
+      </>
+    );
+    subHeadline = (
+      <>
+        Meet all regulatory requirements with our NIST 800-88 compliant processes and comprehensive 
+        audit documentation for HIPAA, SOX, and GLBA compliance.
+      </>
+    );
+    ctaText = "Review Compliance Documentation";
+    ctaIcon = <Shield className="w-7 h-7" />;
+    trustBadges = [
+      { icon: Shield, label: 'NIST 800-88 Certified', color: 'text-curious-blue', bgColor: 'from-curious-blue/30 to-mountain-meadow/25' },
+      { icon: Award, label: 'HIPAA/SOX Ready', color: 'text-mountain-meadow', bgColor: 'from-mountain-meadow/30 to-curious-blue/25' },
+      { icon: CheckCircle, label: '100% Audit Success', color: 'text-mountain-meadow', bgColor: 'from-mountain-meadow/30 to-curious-blue/25' }
+    ];
+  }
+
+  return (
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pb-0">
+      {/* Enhanced Static Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50/60 to-emerald-50/40">
+        <div className="absolute inset-0 opacity-30" style={{
+          backgroundImage: `
+            radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+            radial-gradient(circle at 80% 70%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
+            radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.05) 0%, transparent 60%)
+          `
+        }} />
+        <div className="absolute inset-0 opacity-20" style={{
+          backgroundImage: `repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(59, 130, 246, 0.03) 2px,
+            rgba(59, 130, 246, 0.03) 4px
+          ),
+          repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 2px,
+            rgba(16, 185, 129, 0.03) 2px,
+            rgba(16, 185, 129, 0.03) 4px
+          )`
+        }} />
+      </div>
+
+      {/* Left Side IT Asset Icons - Static */}
+      <div className="absolute left-8 top-32 flex flex-col justify-center items-center space-y-6 z-10 hidden lg:flex">
+        <div className="group relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-transparent rounded-2xl blur-lg" />
+          <div className="relative bg-white/95 backdrop-blur-xl p-5 rounded-2xl shadow-xl border border-blue-200/50 transition-all duration-300 hover:shadow-2xl hover:border-blue-300/60">
+            <Laptop className="w-14 h-14 text-curious-blue" />
+          </div>
+        </div>
+
+        <div className="group relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/20 to-transparent rounded-2xl blur-lg" />
+          <div className="relative bg-white/95 backdrop-blur-xl p-5 rounded-2xl shadow-xl border border-emerald-200/50 transition-all duration-300 hover:shadow-2xl hover:border-emerald-300/60">
+            <Monitor className="w-14 h-14 text-mountain-meadow" />
+          </div>
+        </div>
+
+        <div className="group relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/20 to-transparent rounded-2xl blur-lg" />
+          <div className="relative bg-white/95 backdrop-blur-xl p-5 rounded-2xl shadow-xl border border-cyan-200/50 transition-all duration-300 hover:shadow-2xl hover:border-cyan-300/60">
+            <Server className="w-14 h-14 text-java" />
+          </div>
+        </div>
+
+        <div className="group relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-teal-400/20 to-transparent rounded-2xl blur-lg" />
+          <div className="relative bg-white/95 backdrop-blur-xl p-5 rounded-2xl shadow-xl border border-teal-200/50 transition-all duration-300 hover:shadow-2xl hover:border-teal-300/60">
+            <HardDrive className="w-14 h-14 text-tradewind" />
+          </div>
+        </div>
+
+        <div className="group relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-sky-400/20 to-transparent rounded-2xl blur-lg" />
+          <div className="relative bg-white/95 backdrop-blur-xl p-5 rounded-2xl shadow-xl border border-sky-200/50 transition-all duration-300 hover:shadow-2xl hover:border-sky-300/60">
+            <Router className="w-14 h-14 text-fountain-blue" />
+          </div>
+        </div>
+      </div>
+
+      {/* Right Side IT Asset Icons - Static */}
+      <div className="absolute right-8 top-32 flex flex-col justify-center items-center space-y-6 z-10 hidden lg:flex">
+        <div className="group relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/20 to-transparent rounded-2xl blur-lg" />
+          <div className="relative bg-white/95 backdrop-blur-xl p-5 rounded-2xl shadow-xl border border-emerald-200/50 transition-all duration-300 hover:shadow-2xl hover:border-emerald-300/60">
+            <Smartphone className="w-14 h-14 text-bermuda" />
+          </div>
+        </div>
+
+        <div className="group relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-transparent rounded-2xl blur-lg" />
+          <div className="relative bg-white/95 backdrop-blur-xl p-5 rounded-2xl shadow-xl border border-blue-200/50 transition-all duration-300 hover:shadow-2xl hover:border-blue-300/60">
+            <Printer className="w-14 h-14 text-curious-blue" />
+          </div>
+        </div>
+
+        <div className="group relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-green-400/20 to-transparent rounded-2xl blur-lg" />
+          <div className="relative bg-white/95 backdrop-blur-xl p-5 rounded-2xl shadow-xl border border-green-200/50 transition-all duration-300 hover:shadow-2xl hover:border-green-300/60">
+            <Database className="w-14 h-14 text-mountain-meadow" />
+          </div>
+        </div>
+
+        <div className="group relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/20 to-transparent rounded-2xl blur-lg" />
+          <div className="relative bg-white/95 backdrop-blur-xl p-5 rounded-2xl shadow-xl border border-cyan-200/50 transition-all duration-300 hover:shadow-2xl hover:border-cyan-300/60">
+            <Cpu className="w-14 h-14 text-fountain-blue" />
+          </div>
+        </div>
+
+        <div className="group relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-teal-400/20 to-transparent rounded-2xl blur-lg" />
+          <div className="relative bg-white/95 backdrop-blur-xl p-5 rounded-2xl shadow-xl border border-teal-200/50 transition-all duration-300 hover:shadow-2xl hover:border-teal-300/60">
+            <Package className="w-14 h-14 text-tradewind" />
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24">
+        <div className="text-center pt-16">
+          {/* Redesigned Headline Structure */}
+          <h1
+            className="mb-12 max-w-6xl mx-auto"
+            style={{
+              textShadow: '0 4px 20px rgba(59, 130, 246, 0.15), 0 8px 40px rgba(139, 92, 246, 0.1)'
+            }}
+          >
+            {/* Badge above headline */}
+            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-curious-blue/10 to-mountain-meadow/10 backdrop-blur-xl border border-curious-blue/30 px-5 py-2.5 rounded-full mb-8 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+              <Shield className="w-5 h-5 text-curious-blue" />
+              <span className="text-curious-blue font-bold text-base">Trusted Global ITAD Partner</span>
+              <Star className="w-5 h-5 text-mountain-meadow fill-current" />
+            </div>
+
+            {/* Main headline */}
+            <div className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black leading-[0.85] tracking-tight">
+              {mainHeadlineContent}
+            </div>
+
+            {/* Trust Badges - Right after headline */}
+            <div className="flex flex-nowrap justify-center items-center gap-4 mt-12">
+              {trustBadges.map((trust) => (
+                <div
+                  key={trust.label}
+                  className={`flex items-center space-x-3 bg-white/80 backdrop-blur-xl rounded-2xl px-6 py-3.5 border ${trust.color.replace('text-', 'border-')}/20 relative overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-105`}
+                  style={{
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06), 0 2px 10px rgba(0, 0, 0, 0.04)'
+                  }}
+                >
+                  <div className={`p-2.5 rounded-xl bg-gradient-to-br ${trust.bgColor.replace('/25', '/15')} ${trust.color}`}
+                    style={{
+                      boxShadow: '0 2px 10px rgba(0, 0, 0, 0.08)'
+                    }}
+                  >
+                    <trust.icon className="w-6 h-6" strokeWidth={2.5} />
+                  </div>
+                  <span className={`font-bold text-base relative z-10 ${trust.color}`}
+                    style={{
+                      textShadow: '0 1px 4px rgba(0, 0, 0, 0.08)'
+                    }}
+                  >{trust.label}</span>
+                </div>
+              ))}
+            </div>
+          </h1>
+
+
+          {/* Enhanced Subheadline */}
+          <div className="max-w-6xl mx-auto mb-16">
+            {/* Redesigned Mission & Results Section */}
+            <div className="relative">
+              {/* Background gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-curious-blue/5 via-mountain-meadow/5 to-java/5 rounded-3xl blur-xl" />
+
+              <div className="relative bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/50 overflow-hidden">
+                {/* Top accent line */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-curious-blue via-mountain-meadow to-java" />
+
+                <div className="p-8 md:p-12">
+                  {/* Mission Section */}
+                  <div className="text-center mb-12">
+                    <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-curious-blue/10 to-mountain-meadow/10 px-5 py-2.5 rounded-full mb-6 border border-curious-blue/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                      <div className="w-3 h-3 bg-gradient-to-r from-curious-blue to-java rounded-full" />
+                      <span className="font-bold text-curious-blue">OUR MISSION</span>
+                    </div>
+
+                    <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 leading-tight">
+                      We transform your retired technology into{' '}
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-curious-blue via-mountain-meadow to-java">
+                        strategic value
+                      </span>
+                    </h3>
+
+                    {/* Service pillars in a horizontal layout */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      {[
+                        { icon: Lock, text: 'Secure data destruction', color: 'from-curious-blue to-java' },
+                        { icon: Recycle, text: 'Compliant recycling', color: 'from-mountain-meadow to-tradewind' },
+                        { icon: TrendingUp, text: 'Maximum value recovery programs', color: 'from-java to-fountain-blue' }
+                      ].map((pillar) => (
+                        <div
+                          key={pillar.text}
+                          className="flex flex-col items-center text-center p-6 bg-gray-50/80 rounded-2xl border border-gray-200/40 hover:bg-white/80 transition-all duration-300 group hover:shadow-lg"
+                        >
+                          <div className={`p-3 rounded-xl bg-gradient-to-r ${pillar.color} shadow-lg mb-4 group-hover:shadow-xl transition-shadow duration-300`}>
+                            <pillar.icon className="w-6 h-6 text-white" />
+                          </div>
+                          <span className="font-semibold text-gray-800 group-hover:text-gray-900 transition-colors">
+                            {pillar.text}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Divider */}
+                  <div className="flex items-center justify-center mb-12">
+                    <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent w-full max-w-md" />
+                    <div className="mx-6 p-2 bg-white rounded-full border border-gray-200 shadow-sm">
+                      <Star className="w-4 h-4 text-mountain-meadow fill-current" />
+                    </div>
+                    <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent w-full max-w-md" />
+                  </div>
+
+                  {/* Results Section */}
+                  <div className="text-center">
+                    <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-mountain-meadow/10 to-java/10 px-5 py-2.5 rounded-full mb-8 border border-mountain-meadow/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                      <div className="w-3 h-3 bg-gradient-to-r from-mountain-meadow to-java rounded-full" />
+                      <span className="font-bold text-mountain-meadow">PROVEN RESULTS</span>
+                    </div>
+
+                    {/* Main stat highlight */}
+                    <div className="mb-8">
+                      <div className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-curious-blue via-mountain-meadow to-java mb-3">
+                        675+
+                      </div>
+                      <div className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Enterprise Clients</div>
+                      <div className="text-lg text-gray-600 font-medium">Trust Our Expertise</div>
+                    </div>
+
+                    {/* Supporting stats in modern card layout */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+                      <div className="bg-gradient-to-br from-curious-blue/10 to-java/10 rounded-2xl p-6 border border-curious-blue/30 hover:border-curious-blue/50 transition-all duration-300 group hover:shadow-lg">
+                        <div className="flex items-center justify-center mb-3">
+                          <div className="p-2 rounded-full bg-gradient-to-r from-curious-blue to-java shadow-lg group-hover:shadow-xl transition-shadow duration-300">
+                            <DollarSign className="w-5 h-5 text-white" />
+                          </div>
+                        </div>
+                        <div className="text-3xl md:text-4xl font-bold text-curious-blue mb-1">$12.5M+</div>
+                        <div className="text-sm font-semibold text-gray-700">Value Recovered</div>
+                      </div>
+
+                      <div className="bg-gradient-to-br from-mountain-meadow/10 to-tradewind/10 rounded-2xl p-6 border border-mountain-meadow/30 hover:border-mountain-meadow/50 transition-all duration-300 group hover:shadow-lg">
+                        <div className="flex items-center justify-center mb-3">
+                          <div className="p-2 rounded-full bg-gradient-to-r from-mountain-meadow to-tradewind shadow-lg group-hover:shadow-xl transition-shadow duration-300">
+                            <CheckCircle className="w-5 h-5 text-white" />
+                          </div>
+                        </div>
+                        <div className="text-3xl md:text-4xl font-bold text-mountain-meadow mb-1">100%</div>
+                        <div className="text-sm font-semibold text-gray-700">Compliance Rate</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Larger CTA Button */}
+          <div className="mb-4">
+            <button className="bg-gradient-to-r from-curious-blue via-mountain-meadow to-java text-white px-16 py-7 rounded-full font-bold text-xl md:text-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-5 mx-auto relative overflow-hidden group hover:scale-105">
+              <div className="relative z-10 flex items-center space-x-4">
+                <div>
+                  {ctaIcon}
+                </div>
+                <span className="font-black tracking-wide">{ctaText}</span>
+                <div>
+                  <ArrowRight className="w-7 h-7" />
+                </div>
+              </div>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Hero;
