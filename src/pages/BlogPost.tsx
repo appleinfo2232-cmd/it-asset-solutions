@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import ReactMarkdown from 'react-markdown';
 import { getPostBySlug, BlogPost as PostType } from '../utils/blogLoader';
 import ContactLocation from '../components/ContactLocation';
-import { ArrowLeft, Calendar, Clock, User, Share2, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, User, Share2, Linkedin, Twitter, Facebook, CheckCircle } from 'lucide-react';
 
 const BlogPost: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -23,6 +23,7 @@ const BlogPost: React.FC = () => {
 
   if (!post) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
 
+  // SEO Schema Generation
   const schemaData = {
     "@context": "https://schema.org",
     "@type": post.schemaType || "BlogPosting",
@@ -33,6 +34,14 @@ const BlogPost: React.FC = () => {
     "author": {
       "@type": "Organization",
       "name": post.author
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "IT Asset Solutions",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.itassetsolutions.com/it-asset-solutions-new-logo.webp"
+      }
     }
   };
 
@@ -41,25 +50,39 @@ const BlogPost: React.FC = () => {
       <Helmet>
         <title>{post.seoTitle || post.title} | IT Asset Solutions</title>
         <meta name="description" content={post.metaDescription} />
+        <meta name="keywords" content={post.focusKeyword} />
+        
+        {/* Open Graph */}
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={post.seoTitle || post.title} />
+        <meta property="og:description" content={post.metaDescription} />
+        <meta property="og:image" content={`https://www.itassetsolutions.com${post.image}`} />
+        
+        {/* Schema */}
         <script type="application/ld+json">{JSON.stringify(schemaData)}</script>
       </Helmet>
 
       <main className="pt-32 pb-20 bg-white min-h-screen">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          {/* Breadcrumb / Back Link */}
           <Link to="/blog" className="inline-flex items-center text-slate-500 hover:text-[#0ea5e9] mb-8 font-medium transition-colors">
             <ArrowLeft className="w-4 h-4 mr-2" /> Back to Insights
           </Link>
           
+          {/* Category Pill */}
           <div className="mb-6">
             <span className="bg-blue-50 text-[#0ea5e9] px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
               {post.category}
             </span>
           </div>
 
+          {/* Main Headline */}
           <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-8 leading-tight">
             {post.title}
           </h1>
 
+          {/* Author & Meta Bar */}
           <div className="flex items-center justify-between border-b border-gray-100 pb-8 mb-8">
             <div className="flex items-center gap-4">
                <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center border border-slate-200">
@@ -80,38 +103,52 @@ const BlogPost: React.FC = () => {
             </div>
           </div>
 
+          {/* Featured Image */}
           <div className="rounded-3xl overflow-hidden shadow-2xl mb-12">
             <img src={post.image} alt={post.imageAlt} className="w-full object-cover max-h-[500px]" />
           </div>
 
+          {/* AI Summary Box (Fixed Text Wrapping) */}
           {post.aiSummary && (
             <div className="bg-gradient-to-br from-slate-50 to-blue-50/30 border border-blue-100 rounded-2xl p-6 mb-12">
               <h3 className="text-sm font-bold text-[#0ea5e9] uppercase tracking-wide mb-2 flex items-center">
                 <CheckCircle className="w-4 h-4 mr-2" /> Key Takeaways
               </h3>
-              {/* FIX: Whitespace wrap to prevent cutting off text */}
-              <p className="text-slate-700 italic text-lg leading-relaxed whitespace-pre-wrap">{post.aiSummary}</p>
+              <p className="text-slate-700 italic text-lg leading-relaxed whitespace-pre-wrap">
+                {post.aiSummary}
+              </p>
             </div>
           )}
 
-          {/* --- THE VISUAL FIX: Forced Markdown Styling --- */}
+          {/* Article Body (Fixed Markdown Styling) */}
           <article className="prose prose-lg max-w-none text-slate-700">
              <ReactMarkdown
                components={{
-                 h2: ({node, ...props}) => <h2 className="text-3xl font-bold text-slate-900 mt-12 mb-6" {...props} />,
+                 // Force Headings to look big and bold
+                 h2: ({node, ...props}) => <h2 className="text-3xl font-bold text-slate-900 mt-12 mb-6 border-b border-gray-100 pb-2" {...props} />,
                  h3: ({node, ...props}) => <h3 className="text-2xl font-bold text-slate-800 mt-8 mb-4" {...props} />,
+                 
+                 // Force Bullet Points to appear correctly
                  ul: ({node, ...props}) => <ul className="list-disc pl-6 mb-6 space-y-2 marker:text-[#0ea5e9]" {...props} />,
                  ol: ({node, ...props}) => <ol className="list-decimal pl-6 mb-6 space-y-2 marker:text-[#0ea5e9] font-bold" {...props} />,
-                 li: ({node, ...props}) => <li className="pl-1" {...props} />,
+                 li: ({node, ...props}) => <li className="pl-1 leading-7" {...props} />,
+                 
+                 // Style Links and Quotes
                  a: ({node, ...props}) => <a className="text-[#0ea5e9] font-bold hover:underline" {...props} />,
-                 blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-[#0ea5e9] pl-4 italic bg-gray-50 p-4 rounded-r-lg my-8" {...props} />,
+                 blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-[#0ea5e9] pl-4 italic bg-gray-50 p-4 rounded-r-lg my-8 text-slate-600" {...props} />,
+                 
+                 // Paragraph spacing
                  p: ({node, ...props}) => <p className="mb-6 leading-8" {...props} />,
+                 
+                 // Image styling inside post
+                 img: ({node, ...props}) => <img className="rounded-xl shadow-lg my-8 w-full" {...props} />,
                }}
              >
                {post.body}
              </ReactMarkdown>
           </article>
           
+          {/* Bottom CTA */}
           <div className="mt-16 border-t border-gray-100 pt-10">
             <div className="bg-gradient-to-r from-[#0ea5e9] to-[#22c55e] rounded-3xl p-10 text-white text-center shadow-lg">
               <h3 className="text-2xl font-bold mb-4">Ready to Secure Your IT Assets?</h3>
@@ -123,6 +160,7 @@ const BlogPost: React.FC = () => {
               </Link>
             </div>
           </div>
+
         </div>
       </main>
       <ContactLocation />

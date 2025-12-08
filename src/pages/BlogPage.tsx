@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { getAllPosts, BlogPost } from '../utils/blogLoader';
 import ContactLocation from '../components/ContactLocation';
-import { Search, Clock, ChevronRight, Tag, ArrowUpRight } from 'lucide-react';
+import { Search, Clock, ArrowUpRight, Tag } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const BlogPage: React.FC = () => {
@@ -22,19 +22,25 @@ const BlogPage: React.FC = () => {
 
   useEffect(() => {
     let result = posts;
+    
+    // Filter by Category
     if (activeCategory !== 'All') {
       result = result.filter(post => post.category === activeCategory);
     }
+    
+    // Filter by Search (Title or Description)
     if (searchQuery) {
+      const lowerQuery = searchQuery.toLowerCase();
       result = result.filter(post => 
-        post.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-        post.description.toLowerCase().includes(searchQuery.toLowerCase())
+        post.title.toLowerCase().includes(lowerQuery) || 
+        post.metaDescription.toLowerCase().includes(lowerQuery)
       );
     }
     setFilteredPosts(result);
   }, [activeCategory, searchQuery, posts]);
 
-  const categories = ['All', 'Industry News', 'Data Security', 'ESG & Sustainability', 'Guides'];
+  // Categories matching your Admin Panel
+  const categories = ['All', 'Enterprise ITAD', 'Data Security', 'ESG & Sustainability', 'Industry News', 'Guides & Checklists'];
 
   // Animation variants
   const containerVariants = {
@@ -133,7 +139,7 @@ const BlogPage: React.FC = () => {
                         {filteredPosts[0].title}
                       </h2>
                       <p className="text-gray-200 text-lg line-clamp-2 max-w-2xl">
-                        {filteredPosts[0].description}
+                        {filteredPosts[0].metaDescription}
                       </p>
                     </div>
                   </Link>
@@ -157,7 +163,7 @@ const BlogPage: React.FC = () => {
                     <div className="p-6 flex flex-col justify-between h-1/2">
                       <div>
                         <div className="text-xs font-bold text-[#0ea5e9] mb-2">{filteredPosts[1].date}</div>
-                        <h3 className="text-xl font-bold text-slate-900 mb-3 leading-snug group-hover:text-[#0ea5e9] transition-colors">
+                        <h3 className="text-xl font-bold text-slate-900 mb-3 leading-snug group-hover:text-[#0ea5e9] transition-colors line-clamp-3">
                           {filteredPosts[1].title}
                         </h3>
                       </div>
@@ -197,7 +203,7 @@ const BlogPage: React.FC = () => {
                         {post.title}
                       </h3>
                       <p className="text-slate-500 text-sm line-clamp-3">
-                        {post.description}
+                        {post.metaDescription}
                       </p>
                     </div>
                   </Link>
@@ -219,7 +225,6 @@ const BlogPage: React.FC = () => {
 
           {/* CTA Banner */}
           <div className="mt-20 relative rounded-3xl overflow-hidden bg-slate-900 px-6 py-16 text-center shadow-2xl">
-            <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
             <div className="relative z-10">
                <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Stay Ahead of ITAD Trends</h2>
                <p className="text-gray-400 text-lg mb-8 max-w-xl mx-auto">
