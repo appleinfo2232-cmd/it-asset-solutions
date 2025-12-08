@@ -32,20 +32,20 @@ If you live in **Farmington Hills, Novi, Southfield, or West Bloomfield**, IT As
 ## Public Drop-Off Hours & Location
 We are primarily an enterprise business, but we are proud to open our doors to the public to help keep our community clean.
 
-* **Address:** [23985 Industrial Park Dr, Farmington Hills, MI 48335](https://maps.google.com/?q=IT+Asset+Solutions)
+* **Address:** [23985 Industrial Park Dr, Farmington Hills, MI 48335](https://goo.gl/maps/YOUR_MAP_LINK)
 * **Hours:** Monday through Friday, 8:00 AM – 5:00 PM
 * **Appointment?** No appointment necessary for small residential drop-offs. Just pull up to our loading dock or front entrance!
 
 ## What We Accept (Usually Free)
 We focus on **IT equipment** (Information Technology). Because we are an R2-compliant facility, we can process most computer-related electronics for free.
 
-### ✅ Accepted Items:
+### Accepted Items:
 * **Computers:** Laptops, MacBooks, PC Towers, Servers
 * **Mobile:** Cell Phones, Tablets, iPads, E-readers
 * **Accessories:** Keyboards, Mice, Cords, Power Cables, Chargers
 * **Networking:** Routers, Switches, Modems
 
-### ⚠️ Items with Fees or Restrictions:
+### Items with Fees or Restrictions:
 Some items contain hazardous materials that cost money to process safely. Please call us at **(248) 602-3832** before bringing:
 * Old CRT (Tube) TVs or Monitors
 * Large Office Printers / Copiers
