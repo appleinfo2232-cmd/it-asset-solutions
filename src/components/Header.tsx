@@ -68,6 +68,8 @@ const Header: React.FC = () => {
       ]
     },
     { name: 'IT Buyback', href: '/services/corporate-it-buyback', type: 'link', icon: HandCoins, highlight: true },
+    // --- ADDED BLOG LINK HERE ---
+    { name: 'Blog', href: '/blog', type: 'link' },
     { name: 'About', href: '/about', type: 'link' },
     { name: 'Contact', href: '/contact', type: 'link' },
   ];
