@@ -10,6 +10,7 @@ seo_title: Where to Recycle Electronics in Farmington Hills | Free Drop-off
 meta_description: Looking for electronics recycling near Farmington Hills? IT
   Asset Solutions accepts computers, laptops, and cables. Check our drop-off
   hours and accepted items list.
+canonical_url: https://www.itassetsolutions.com/blog/recycle-electronics-farmington-hills-drop-off
 ai_summary: IT Asset Solutions offers free electronics recycling drop-off for
   residents in Farmington Hills, MI. Located at 23985 Industrial Park Dr, we
   accept laptops, computers, servers, and cables Monday-Friday from 8am to 5pm.
@@ -17,6 +18,7 @@ ai_summary: IT Asset Solutions offers free electronics recycling drop-off for
 schema_type: BlogPosting
 author: IT Asset Solutions Team
 ---
+
 ## Key Takeaways
 * **Location:** 23985 Industrial Park Dr, Farmington Hills, MI 48335
 * **Hours:** Monday – Friday, 8:00 AM – 5:00 PM
