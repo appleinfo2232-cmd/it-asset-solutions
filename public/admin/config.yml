@@ -1,6 +1,6 @@
 backend:
   name: git-gateway
-  branch: main # Ensure this matches your repo branch
+  branch: main # Ensure this matches your repo branch (main or master)
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
@@ -15,40 +15,25 @@ collections:
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      # --- MAIN CONTENT (Visible at Top) ---
+      # --- MAIN CONTENT ---
       - { label: "Article Title (H1)", name: "title", widget: "string" }
-      
-      # URL SLUG (Added as requested)
-      - { label: "Custom URL Slug", name: "url_slug", widget: "string", required: false, hint: "e.g. 'remote-workforce-logistics'. Leave blank to auto-generate." }
-      
       - { label: "Publish Date", name: "date", widget: "datetime" }
-      
-      # ALL SERVICE CATEGORIES (Updated)
       - { label: "Category", name: "category", widget: "select", options: [
-          "Industry News", 
-          "Guides & Tips", 
-          "Case Studies",
-          "Enterprise ITAD",
-          "Secure Data Destruction", 
-          "IT Asset Value Recovery",
-          "Corporate IT Buyback",
-          "Secure Logistics",
-          "Auditing & Compliance",
-          "Wholesale IT Equipment",
-          "ESG & Sustainability"
+          "Enterprise ITAD", "Data Security", "ESG & Sustainability", "Remote Logistics", "Industry News", "Guides & Checklists", "Case Studies"
         ]}
       
-      # FEATURED IMAGE (Visible at Top)
+      # --- IMAGE UPLOAD (Visible) ---
       - { label: "Featured Image", name: "image", widget: "image", hint: "Upload a high-res image (1200x630px). Critical for social sharing." }
       - { label: "Image Alt Text", name: "image_alt", widget: "string", hint: "Describe the image for SEO" }
 
       # --- BODY CONTENT ---
       - { label: "Body Content", name: "body", widget: "markdown", hint: "Use H2 and H3 for subheadings" }
 
-      # --- SEO INTELLIGENCE (Yoast Style) ---
+      # --- SEO INTELLIGENCE ---
       - { label: "Focus Keyword", name: "focus_keyword", widget: "string", hint: "Main keyword to rank for" }
       - { label: "SEO Meta Title", name: "seo_title", widget: "string", required: false, hint: "Leave blank to use Article Title" }
       - { label: "Meta Description", name: "meta_description", widget: "text", hint: "Max 160 chars. Must include Focus Keyword." }
+      - { label: "Custom URL Slug", name: "url_slug", widget: "string", required: false, hint: "e.g. 'remote-workforce-logistics'. Leave blank to auto-generate." }
       - { label: "Canonical URL", name: "canonical_url", widget: "string", required: false }
 
       # --- GOOGLE AI & SCHEMA ---

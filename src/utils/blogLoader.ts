@@ -1,110 +1,63 @@
-// src/utils/blogLoader.ts
-// Loader for markdown blog posts using import.meta.glob + gray-matter.
-// Works with Vite + React. Markdown lives in src/content/blog (per Netlify CMS). :contentReference[oaicite:2]{index=2}
-
-import matter from "gray-matter";
-
-export type BlogPost = {
+export interface BlogPost {
+  slug: string;
   title: string;
-  url_slug?: string;
   date: string;
-  category?: string;
-  image?: string;
-  image_alt?: string;
-  focus_keyword?: string;
-  seo_title?: string;
-  meta_description?: string;
-  canonical_url?: string;
-  ai_summary?: string;
-  schema_type?: string;
-  author?: string;
-  readTime?: string;
+  category: string;
+  image: string;
+  imageAlt: string;
+  author: string;
   body: string;
-  [key: string]: any;
-};
-
-// IMPORTANT: use this exact object form with query/import
-const contentModules = import.meta.glob("/src/content/blog/**/*.md", {
-  query: "?raw",
-  import: "default",
-}) as Record<string, () => Promise<string>>;
-
-// Find markdown file matching slug (supports date-prefixed filenames). :contentReference[oaicite:3]{index=3}
-async function findModuleForSlug(slug: string): Promise<string | null> {
-  const keys = Object.keys(contentModules);
-
-  const match = keys.find(
-    (k) =>
-      k.endsWith(`${slug}.md`) ||
-      k.includes(`/${slug}.md`) ||
-      k.includes(`-${slug}.md`)
-  );
-
-  return match || null;
+  seoTitle: string;
+  metaDescription: string;
+  focusKeyword: string;
+  aiSummary: string;
+  schemaType: string;
+  readTime: string;
 }
 
-function mapToBlogPost(
-  slugFallback: string,
-  data: any,
-  content: string
-): BlogPost {
-  const slug = (data.url_slug || slugFallback || "").trim();
-
-  const post: BlogPost = {
-    title: String(data.title || ""),
-    url_slug: slug,
-    date: String(data.date || new Date().toISOString()),
-    category: data.category || "",
-    image: data.image || "",
-    image_alt: data.image_alt || data.imageAlt || "",
-    focus_keyword: data.focus_keyword || data.focusKeyword || "",
-    seo_title: data.seo_title || data.seoTitle || data.title || "",
-    meta_description: data.meta_description || data.metaDescription || "",
-    canonical_url: data.canonical_url || "",
-    ai_summary: data.ai_summary || data.aiSummary || "",
-    schema_type: data.schema_type || data.schemaType || "BlogPosting",
-    author: data.author || "IT Asset Solutions Team",
-    readTime: data.readTime || "",
-    body: content || "",
-    ...data,
-  };
-
-  return post;
-}
-
-// Single post – used by BlogPost.tsx
-export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
-  const modPath = await findModuleForSlug(slug);
-  if (!modPath) return null;
-
-  const loader = contentModules[modPath];
-  const raw = await loader();
-  const { data, content } = matter(raw);
-
-  return mapToBlogPost(slug, data, content);
-}
-
-// All posts – used by BlogPage.tsx
 export async function getAllPosts(): Promise<BlogPost[]> {
+  const modules = import.meta.glob('/src/content/blog/*.md', { as: 'raw' });
   const posts: BlogPost[] = [];
 
-  for (const path of Object.keys(contentModules)) {
-    const loader = contentModules[path];
-    const raw = await loader();
-    const { data, content } = matter(raw);
+  for (const path in modules) {
+    const rawContent = await modules[path]();
+    
+    // Simple Extractor for Flat YAML
+    const getField = (key: string) => {
+      const match = rawContent.match(new RegExp(`${key}: "?(.*)"?`)); 
+      return match ? match[1].replace(/^"|"$/g, '').trim() : '';
+    };
 
-    const fileName = path.split("/").pop() || "";
-    const baseName = fileName.replace(/\.md$/, "");
-    const derivedSlug = (data.url_slug || baseName).trim();
+    const bodyParts = rawContent.split('---');
+    const body = bodyParts.slice(2).join('---').trim();
+    const words = body.split(/\s+/).length;
+    const readTime = Math.ceil(words / 200) + ' min read';
 
-    const post = mapToBlogPost(derivedSlug, data, content);
-    posts.push(post);
+    const filenameSlug = path.split('/').pop()?.replace('.md', '') || '';
+    const customSlug = getField('url_slug');
+
+    posts.push({
+      slug: customSlug || filenameSlug,
+      title: getField('title'),
+      date: new Date(getField('date')).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+      category: getField('category') || 'Industry News',
+      image: getField('image') || '/it-asset-solutions-social-share.jpg',
+      imageAlt: getField('image_alt'),
+      author: getField('author') || 'IT Asset Solutions',
+      body,
+      seoTitle: getField('seo_title') || getField('title'),
+      metaDescription: getField('meta_description'),
+      focusKeyword: getField('focus_keyword'),
+      aiSummary: getField('ai_summary'),
+      schemaType: getField('schema_type') || 'BlogPosting',
+      readTime
+    });
   }
 
-  // Newest first
-  posts.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
+  return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+}
 
-  return posts;
+export async function getPostBySlug(slug: string): Promise<BlogPost | undefined> {
+  const posts = await getAllPosts();
+  return posts.find(post => post.slug === slug);
 }
