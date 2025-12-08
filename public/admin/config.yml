@@ -1,18 +1,26 @@
 backend:
   name: git-gateway
-  branch: main # Change to 'master' if your repo uses master
+  branch: main
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
+site_url: "https://www.itassetsolutions.com"
+display_url: "https://www.itassetsolutions.com"
+logo_url: "https://www.itassetsolutions.com/it-asset-solutions-new-logo.webp"
 
 collections:
   - name: "blog"
-    label: "Blog"
+    label: "Blog Posts"
     folder: "src/content/blog"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Publish Date", name: "date", widget: "datetime"}
-      - {label: "Description", name: "description", widget: "text"}
-      - {label: "Body", name: "body", widget: "markdown"}
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Category", name: "category", widget: "select", options: ["Industry News", "Data Security", "ESG & Sustainability", "Guides", "Case Studies"] }
+      - { label: "Featured Post?", name: "featured", widget: "boolean", default: false }
+      - { label: "Short Description", name: "description", widget: "text" }
+      - { label: "Featured Image", name: "image", widget: "image" }
+      - { label: "Author Name", name: "author", widget: "string", default: "IT Asset Solutions" }
+      - { label: "Author Avatar", name: "author_image", widget: "image", required: false }
+      - { label: "Body", name: "body", widget: "markdown" }

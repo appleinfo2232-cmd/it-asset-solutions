@@ -18,8 +18,9 @@ const WholesaleITEquipmentPage = lazy(() => import('./pages/WholesaleITEquipment
 const AuditingComplianceReportingPage = lazy(() => import('./pages/AuditingComplianceReportingPage'));
 const SecureChainOfCustodyLogisticsPage = lazy(() => import('./pages/SecureChainOfCustodyLogisticsPage'));
 
-// Add import
+// Blog Components
 const BlogPage = lazy(() => import('./pages/BlogPage'));
+const BlogPost = lazy(() => import('./pages/BlogPost')); // <-- ADDED THIS
 
 // Loading fallback
 const PageLoader = () => (
@@ -49,8 +50,9 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
             
-            {/* Blog Page */}
+            {/* Blog Routes */}
             <Route path="/blog" element={<BlogPage />} />
+            <Route path="/blog/:slug" element={<BlogPost />} /> {/* <-- ADDED THIS */}
 
             {/* Core Services */}
             <Route path="/services/enterprise-itad" element={<EnterpriseITADPage />} />
