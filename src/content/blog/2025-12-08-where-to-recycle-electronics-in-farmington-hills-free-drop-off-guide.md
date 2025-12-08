@@ -17,94 +17,49 @@ ai_summary: IT Asset Solutions offers free electronics recycling drop-off for
 schema_type: BlogPosting
 author: IT Asset Solutions Team
 ---
-\## Key Takeaways
-
-\* \*\*Location:\** 23985 Industrial Park Dr, Farmington Hills, MI 48335
-
-\* \*\*Hours:\** Monday – Friday, 8:00 AM – 5:00 PM
-
-\* \*\*Cost:\** Free for most IT equipment (laptops, PCs, servers, cables)
-
-\* \*\*Data Security:\** All hard drives are securely wiped or shredded
-
-
+## Key Takeaways
+* **Location:** 23985 Industrial Park Dr, Farmington Hills, MI 48335
+* **Hours:** Monday – Friday, 8:00 AM – 5:00 PM
+* **Cost:** Free for most IT equipment (laptops, PCs, servers, cables)
+* **Data Security:** All hard drives are securely wiped or shredded
 
 Do you have a drawer full of old cables, a broken laptop collecting dust, or an old desktop tower sitting in your basement? You are not alone. Most households in Michigan have at least 3-4 old electronic devices ("e-waste") that they don't know how to dispose of.
 
-
-
 You can’t just throw them in the trash—it’s illegal in Michigan because electronics contain toxic materials like lead and mercury. But finding a safe, responsible place to recycle them shouldn't be a headache.
 
+If you live in **Farmington Hills, Novi, Southfield, or West Bloomfield**, IT Asset Solutions is your local, responsible answer.
 
-
-If you live in \*\*Farmington Hills, Novi, Southfield, or West Bloomfield\*\*, IT Asset Solutions is your local, responsible answer.
-
-
-
-\## Public Drop-Off Hours & Location
-
+## Public Drop-Off Hours & Location
 We are primarily an enterprise business, but we are proud to open our doors to the public to help keep our community clean.
 
+* **Address:** [23985 Industrial Park Dr, Farmington Hills, MI 48335](https://maps.google.com/?q=IT+Asset+Solutions)
+* **Hours:** Monday through Friday, 8:00 AM – 5:00 PM
+* **Appointment?** No appointment necessary for small residential drop-offs. Just pull up to our loading dock or front entrance!
 
+## What We Accept (Usually Free)
+We focus on **IT equipment** (Information Technology). Because we are an R2-compliant facility, we can process most computer-related electronics for free.
 
-\* \*\*Address:\** \[23985 Industrial Park Dr, Farmington Hills, MI 48335](https://maps.google.com/?q=23985+Industrial+Park+Dr+Farmington+Hills+MI)
+### ✅ Accepted Items:
+* **Computers:** Laptops, MacBooks, PC Towers, Servers
+* **Mobile:** Cell Phones, Tablets, iPads, E-readers
+* **Accessories:** Keyboards, Mice, Cords, Power Cables, Chargers
+* **Networking:** Routers, Switches, Modems
 
-\* \*\*Hours:\** Monday through Friday, 8:00 AM – 5:00 PM
+### ⚠️ Items with Fees or Restrictions:
+Some items contain hazardous materials that cost money to process safely. Please call us at **(248) 602-3832** before bringing:
+* Old CRT (Tube) TVs or Monitors
+* Large Office Printers / Copiers
+* Household Appliances (Microwaves, Fridges - *We generally do not accept these*)
 
-\* \*\*Appointment?\** No appointment necessary for small residential drop-offs. Just pull up to our loading dock or front entrance!
-
-
-
-\## What We Accept (Usually Free)
-
-We focus on \*\*IT equipment\*\* (Information Technology). Because we are an R2-compliant facility, we can process most computer-related electronics for free.
-
-
-
-\*\*✅ Accepted Items:\*\*
-
-\* \*\*Computers:\** Laptops, MacBooks, PC Towers, Servers
-
-\* \*\*Mobile:\** Cell Phones, Tablets, iPads, E-readers
-
-\* \*\*Accessories:\** Keyboards, Mice, Cords, Power Cables, Chargers
-
-\* \*\*Networking:\** Routers, Switches, Modems
-
-
-
-\*\*⚠️ Items with Fees or Restrictions:\*\*
-
-Some items contain hazardous materials that cost money to process safely. Please call us at \*\*(248) 602-3832\*\* before bringing:
-
-\* Old CRT (Tube) TVs or Monitors
-
-\* Large Office Printers / Copiers
-
-\* Household Appliances (Microwaves, Fridges - \*We generally do not accept these*)
-
-
-
-\## Is My Data Safe?
-
-This is the #1 question we get. \*\*Yes!\*\*
-
-
+## Is My Data Safe?
+This is the #1 question we get. **Yes!**
 
 Even for residential drop-offs, we treat your personal laptop with the exact same military-grade security we use for our bank and hospital clients.
+* **Standard:** All hard drives are either digitally wiped (NIST 800-88 purge) or physically shredded.
+* **Guarantee:** We do not browse, copy, or resell your personal data. It is destroyed immediately upon processing.
 
-\* \*\*Standard:\** All hard drives are either digitally wiped (NIST 800-88 purge) or physically shredded.
+## Why Not the Landfill?
+Electronics contain heavy metals that can leak into the groundwater if buried in a landfill. When you recycle with IT Asset Solutions, we harvest reusable materials (copper, gold, plastic) and reintroduce them into the manufacturing supply chain. This is called the **Circular Economy**, and by dropping off your old laptop, you are directly contributing to a cleaner Michigan.
 
-\* \*\*Guarantee:\** We do not browse, copy, or resell your personal data. It is destroyed immediately upon processing.
-
-
-
-\## Why Not the Landfill?
-
-Electronics contain heavy metals that can leak into the groundwater if buried in a landfill. When you recycle with IT Asset Solutions, we harvest reusable materials (copper, gold, plastic) and reintroduce them into the manufacturing supply chain. This is called the \*\*Circular Economy\*\*, and by dropping off your old laptop, you are directly contributing to a cleaner Michigan.
-
-
-
-\### Stop by today!
-
+### Stop by today!
 We are located right off Industrial Park Drive. Look for the IT Asset Solutions sign. We look forward to helping you declutter responsibly!
