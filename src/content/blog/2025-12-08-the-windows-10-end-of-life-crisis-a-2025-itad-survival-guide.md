@@ -16,11 +16,6 @@ ai_summary: Windows 10 support ends Oct 2025. Enterprises must replace
 schema_type: BlogPosting
 author: IT Asset Solutions Team
 ---
-
-\* \*\*The Opportunity:\** A fleet refresh is the perfect time to recover residual value through ITAD remarketing.
-
-
-
 If you manage an IT fleet for a mid-to-large enterprise, the clock is ticking. Microsoft has officially confirmed that \*\*Windows 10 will reach End of Support (EOS) on October 14, 2025\*\*.
 
 
@@ -45,9 +40,9 @@ The problem isn't just software; it's hardware. Windows 11 has strict system req
 
 This creates two massive challenges:
 
-1.  \*\*Data Security:\*\* How do you securely wipe thousands of hard drives as they come offline?
+\* \*\*Data Security:\** How do you securely wipe thousands of hard drives as they come offline?
 
-2.  \*\*Asset Value:\*\* What do you do with thousands of 4-year-old laptops that are still functional but incompatible with your new OS?
+\* \*\*Asset Value:\** What do you do with thousands of 4-year-old laptops that are still functional but incompatible with your new OS?
 
 
 
