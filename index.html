@@ -4,55 +4,61 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- Updated SEO Meta Tags -->
-    <title>IT Asset Solutions | Secure ITAD & Data Destruction Farmington Hills, MI</title>
-    <meta name="description" content="IT Asset Solutions provides secure ITAD services in Farmington Hills, MI. NIST 800-88 compliant data destruction, maximum value recovery, and responsible e-waste recycling for Michigan businesses. Free assessment available." />
-    <meta name="robots" content="index, follow">
+    <title>Electronics Recycling Center & Enterprise ITAD Michigan | IT Asset Solutions</title>
+    <meta name="description" content="Secure Electronics Recycling Center & ITAD Service in Farmington Hills, MI. Public computer drop-off and corporate data destruction available. NIST 800-88 Compliant." />
+    <meta name="keywords" content="Electronics Recycling Center, Computer Recovery, Public Drop Off, Enterprise ITAD, Secure Data Destruction, Hard Drive Shredding, Farmington Hills Recycling, Laptop Disposal" />
     <meta name="author" content="IT Asset Solutions">
+    <meta name="robots" content="index, follow">
+
     <meta name="geo.region" content="US-MI">
     <meta name="geo.placename" content="Farmington Hills">
     <meta name="geo.position" content="42.4989;-83.3677">
     <meta name="ICBM" content="42.4989, -83.3677">
     
-    <!-- Favicon and App Icons -->
+    <link rel="canonical" href="https://www.itassetsolutions.com/" />
+    
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.itassetsolutions.com/" />
 
-    
-    <!-- Preload critical resources for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="modulepreload" href="/src/main.tsx">
     
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="business.business" />
     <meta property="og:url" content="https://www.itassetsolutions.com/" />
-    <meta property="og:title" content="IT Asset Solutions | Secure ITAD & Data Destruction Farmington Hills, MI" />
-    <meta property="og:description" content="IT Asset Solutions provides secure ITAD services in Farmington Hills, MI. NIST 800-88 compliant data destruction, maximum value recovery, and responsible e-waste recycling." />
-    <meta property="og:image" content="https://itassetsolutions.com/it-asset-solutions-new-logo.webp" />
+    <meta property="og:title" content="IT Asset Solutions | Business & Public Electronics Recycling" />
+    <meta property="og:description" content="Secure computer recycling and data destruction for businesses and residents in Michigan. Drop-off hours available." />
+    <meta property="og:image" content="https://www.itassetsolutions.com/it-asset-solutions-new-logo.webp" />
 
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="IT Asset Solutions | Secure ITAD & Data Destruction Farmington Hills, MI" />
-    <meta name="twitter:description" content="Secure ITAD services in Farmington Hills, MI. NIST compliant data destruction & value recovery for Michigan businesses." />
-    <meta name="twitter:image" content="https://itassetsolutions.com/it-asset-solutions-new-logo.webp" />
+    <meta name="twitter:title" content="IT Asset Solutions | Electronics Recycling Services" />
+    <meta name="twitter:description" content="Michigan's trusted partner for secure electronics recycling. Serving businesses and the public." />
+    <meta name="twitter:image" content="https://www.itassetsolutions.com/it-asset-solutions-new-logo.webp" />
 
-    <!-- Performance optimization meta tags -->
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="theme-color" content="#18a9df">
-    
-    
-    <!-- Preload critical JavaScript -->
-    <link rel="modulepreload" href="/src/main.tsx">
+    <meta name="theme-color" content="#0ea5e9">
+
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    </script>
   </body>
 </html>
