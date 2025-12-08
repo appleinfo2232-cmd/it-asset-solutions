@@ -1,18 +1,34 @@
+// Define the structure of your Super-Post
 export interface BlogPost {
   slug: string;
+  // Content Tab
   title: string;
+  subtitle: string;
   date: string;
+  author: string;
   category: string;
+  body: string;
+  // Media Tab
   image: string;
   imageAlt: string;
-  author: string;
-  authorImage: string;
-  body: string;
-  // New SEO Fields
+  videoUrl?: string;
+  // SEO Tab
   seoTitle: string;
   metaDescription: string;
   focusKeyword: string;
+  canonicalUrl?: string;
+  robots: string;
+  // SGE/EEAT Tab
+  aiSummary: string;
   schemaType: string;
+  experienceNote?: string;
+  // FAQ Tab
+  faq: { question: string; answer: string }[];
+  // Social Tab
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  // Generated Fields
   readTime: string;
 }
 
@@ -23,36 +39,48 @@ export async function getAllPosts(): Promise<BlogPost[]> {
   for (const path in modules) {
     const rawContent = await modules[path]();
     
-    // Helper to extract fields safely
-    const extract = (key: string) => {
-      const match = rawContent.match(new RegExp(`${key}: "?(.*?)"?$`)); // Simple regex for demo
-      return match ? match[1].replace(/['"]+/g, '').trim() : '';
+    // --- Helper to safely extract nested fields ---
+    const getField = (key: string) => {
+      // Regex looks for "key: value"
+      const match = rawContent.match(new RegExp(`${key}: "?(.*)"?`)); 
+      return match ? match[1].replace(/^"|"$/g, '').trim() : '';
     };
 
-    // Note: Since Decap CMS saves nested objects (seo_tab), parsing raw markdown frontmatter 
-    // with Regex is fragile. For production, you should use 'front-matter' library.
-    // Assuming simple flat structure or manual parsing for now:
-    
+    // --- Body Extraction ---
     const bodyParts = rawContent.split('---');
     const body = bodyParts.slice(2).join('---').trim();
-    const wordCount = body.split(/\s+/).length;
-    const readTime = Math.ceil(wordCount / 200) + ' min read';
 
+    // --- Read Time Calculation ---
+    const words = body.split(/\s+/).length;
+    const readTime = Math.ceil(words / 200) + ' min read';
+
+    // --- Filename Fallback ---
+    const filenameSlug = path.split('/').pop()?.replace('.md', '') || '';
+    const customSlug = getField('url_slug');
+    
     posts.push({
-      slug: path.split('/').pop()?.replace('.md', '') || '',
-      title: extract('title'),
-      date: new Date(extract('date')).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-      category: extract('category') || 'Industry News',
-      image: extract('image') || '/it-asset-solutions-social-share.jpg',
-      imageAlt: extract('image_alt') || extract('title'),
-      author: extract('author') || 'IT Asset Solutions',
-      authorImage: extract('author_image'),
+      slug: customSlug || filenameSlug,
+      title: getField('title') || 'Untitled Post',
+      subtitle: getField('subtitle'),
+      date: new Date(getField('date')).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+      author: getField('author') || 'IT Asset Solutions',
+      category: getField('category') || 'Industry News',
       body,
-      // SEO Mappings
-      seoTitle: extract('seo_title') || extract('title'),
-      metaDescription: extract('meta_description') || '',
-      focusKeyword: extract('focus_keyword'),
-      schemaType: extract('schema_type') || 'BlogPosting',
+      image: getField('image') || '/default-blog.jpg',
+      imageAlt: getField('image_alt') || getField('title'),
+      videoUrl: getField('video_url'),
+      seoTitle: getField('seo_title') || getField('title'),
+      metaDescription: getField('meta_description'),
+      focusKeyword: getField('focus_keyword'),
+      canonicalUrl: getField('canonical_url'),
+      robots: getField('robots') || 'index, follow',
+      aiSummary: getField('ai_summary'),
+      schemaType: getField('schema_type') || 'BlogPosting',
+      experienceNote: getField('experience_note'),
+      faq: [], // Note: Advanced regex needed to parse lists from raw markdown string if not using a parser library
+      ogTitle: getField('og_title'),
+      ogDescription: getField('og_description'),
+      ogImage: getField('og_image'),
       readTime
     });
   }
@@ -62,5 +90,5 @@ export async function getAllPosts(): Promise<BlogPost[]> {
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | undefined> {
   const posts = await getAllPosts();
-  return posts.find((post) => post.slug === slug);
+  return posts.find(post => post.slug === slug);
 }

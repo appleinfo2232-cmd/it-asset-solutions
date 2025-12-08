@@ -1,41 +1,71 @@
 backend:
   name: git-gateway
-  branch: main
+  branch: main # or master
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 site_url: "https://www.itassetsolutions.com"
 display_url: "https://www.itassetsolutions.com"
 logo_url: "https://www.itassetsolutions.com/it-asset-solutions-new-logo.webp"
+show_preview_links: true
 
 collections:
   - name: "blog"
-    label: "Blog Posts"
+    label: "📝 Blog Posts (Advanced)"
     folder: "src/content/blog"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}} — {{date}}"
+    editor:
+      preview: true
     fields:
-      # --- CONTENT TAB ---
-      - { label: "Main Content", name: "content_tab", widget: "object", collapsed: false, fields: [
-          { label: "Article Title (H1)", name: "title", widget: "string", hint: "Keep it under 70 characters" },
+      # --- TAB 1: CONTENT CREATION ---
+      - { label: "Content Editor", name: "content_tab", widget: "object", collapsed: false, fields: [
+          { label: "Article Title (H1)", name: "title", widget: "string", hint: "Main headline. 60-70 chars optimal." },
+          { label: "Sub-Title", name: "subtitle", widget: "string", required: false, hint: "Supporting hook for the hero section." },
+          { label: "Publish Status", name: "status", widget: "select", default: "draft", options: ["draft", "published", "scheduled"] },
           { label: "Publish Date", name: "date", widget: "datetime" },
-          { label: "Category", name: "category", widget: "select", options: ["Industry News", "Data Security", "ESG & Sustainability", "Guides", "Case Studies"] },
-          { label: "Featured Image", name: "image", widget: "image", hint: "Upload a high-res image (1200x630px)" },
-          { label: "Image Alt Text", name: "image_alt", widget: "string", hint: "Describe image for SEO (include focus keyword)" },
-          { label: "Body Content", name: "body", widget: "markdown", hint: "Use H2 and H3 for subheadings" }
+          { label: "Author", name: "author", widget: "string", default: "IT Asset Solutions Team" },
+          { label: "Category", name: "category", widget: "select", options: [
+            "Enterprise ITAD", "Data Security", "ESG & Sustainability", "Remote Logistics", "Industry News", "Guides & Checklists", "Case Studies"
+          ]},
+          { label: "Content Body (Rich Text)", name: "body", widget: "markdown", hint: "Use H2/H3 for structure. Include bullet points for AI readability." }
         ]}
 
-      # --- AUTHOR TAB ---
-      - { label: "Author Info", name: "author_tab", widget: "object", collapsed: true, fields: [
-          { label: "Author Name", name: "author", widget: "string", default: "IT Asset Solutions" },
-          { label: "Author Profile Image", name: "author_image", widget: "image", required: false }
+      # --- TAB 2: MEDIA & VISUALS ---
+      - { label: "Media & Assets", name: "media_tab", widget: "object", collapsed: true, fields: [
+          { label: "Featured Image", name: "image", widget: "image", hint: "High-res (1200x630px). Critical for social sharing." },
+          { label: "Image Alt Text", name: "image_alt", widget: "string", hint: "Describe the image using your Focus Keyword." },
+          { label: "Video URL (Optional)", name: "video_url", widget: "string", required: false, hint: "YouTube/Vimeo link for 'Video Pack' ranking." }
         ]}
 
-      # --- SEO OPTIMIZATION TAB (The "Yoast" Features) ---
-      - { label: "SEO Settings", name: "seo_tab", widget: "object", collapsed: false, fields: [
-          { label: "Focus Keyword", name: "focus_keyword", widget: "string", hint: "The main keyword you want to rank for" },
-          { label: "SEO Meta Title", name: "seo_title", widget: "string", hint: "Different from H1? Leave blank to use Article Title." },
-          { label: "Meta Description", name: "meta_description", widget: "text", hint: "155-160 characters. Must include Focus Keyword." },
-          { label: "Canonical URL", name: "canonical_url", widget: "string", required: false, hint: "Only if this is a repost from another site" },
-          { label: "Schema Type", name: "schema_type", widget: "select", default: "BlogPosting", options: ["BlogPosting", "NewsArticle", "TechArticle"] }
+      # --- TAB 3: ADVANCED SEO (YOAST/RANKMATH STYLE) ---
+      - { label: "SEO Intelligence", name: "seo_tab", widget: "object", collapsed: false, fields: [
+          { label: "Focus Keyword", name: "focus_keyword", widget: "string", hint: "The #1 term you want to rank for." },
+          { label: "Secondary Keywords", name: "secondary_keywords", widget: "list", required: false, hint: "LSI keywords and semantic variations." },
+          { label: "SEO Meta Title", name: "seo_title", widget: "string", hint: "If different from H1. Max 60 chars." },
+          { label: "Meta Description", name: "meta_description", widget: "text", hint: "The 'Ad Copy' for Google. Max 160 chars. Must include Focus Keyword." },
+          { label: "Custom URL Slug", name: "url_slug", widget: "string", required: false, hint: "Override default slug. Keep it short (e.g., 'remote-itad-guide')." },
+          { label: "Canonical URL", name: "canonical_url", widget: "string", required: false, hint: "Use only if this content was originally published elsewhere." },
+          { label: "Robots Setting", name: "robots", widget: "select", default: "index, follow", options: ["index, follow", "noindex, follow", "noindex, nofollow"] }
+        ]}
+
+      # --- TAB 4: GOOGLE AI SEARCH (SGE) & EEAT ---
+      - { label: "AI Search & EEAT", name: "sge_tab", widget: "object", collapsed: true, fields: [
+          { label: "AI Summary / Snippet", name: "ai_summary", widget: "text", hint: "A concise 50-word answer for Google's AI Overview box." },
+          { label: "Content Type / Schema", name: "schema_type", widget: "select", default: "BlogPosting", options: ["BlogPosting", "NewsArticle", "TechArticle", "HowTo"] },
+          { label: "Experience Signal", name: "experience_note", widget: "string", required: false, hint: "Briefly state WHY the author is an expert (e.g., '15 years ITAD experience'). Injected into Schema." }
+        ]}
+
+      # --- TAB 5: FAQ GENERATOR (SCHEMA) ---
+      - { label: "FAQ Schema Builder", name: "faq_tab", widget: "list", collapsed: true, fields: [
+          { label: "Question", name: "question", widget: "string" },
+          { label: "Answer", name: "answer", widget: "text" }
+        ], hint: "Add 3-5 questions. These will be automatically converted to JSON-LD FAQ Schema." }
+
+      # --- TAB 6: SOCIAL SHARING (OPEN GRAPH) ---
+      - { label: "Social Preview", name: "social_tab", widget: "object", collapsed: true, fields: [
+          { label: "OG Title", name: "og_title", widget: "string", required: false, hint: "Title for Facebook/LinkedIn. Defaults to SEO Title." },
+          { label: "OG Description", name: "og_description", widget: "text", required: false, hint: "Description for social cards." },
+          { label: "OG Image", name: "og_image", widget: "image", required: false, hint: "Custom image for social sharing. Defaults to Featured Image." }
         ]}
