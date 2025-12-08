@@ -89,7 +89,8 @@ const BlogPost: React.FC = () => {
               <h3 className="text-sm font-bold text-[#0ea5e9] uppercase tracking-wide mb-2 flex items-center">
                 <CheckCircle className="w-4 h-4 mr-2" /> Key Takeaways
               </h3>
-              <p className="text-slate-700 italic">{post.aiSummary}</p>
+              {/* FIX: Added whitespace-pre-wrap to allow wrapping and prevent cutting off */}
+              <p className="text-slate-700 italic text-lg leading-relaxed whitespace-pre-wrap">{post.aiSummary}</p>
             </div>
           )}
 
