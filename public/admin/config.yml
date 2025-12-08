@@ -15,12 +15,27 @@ collections:
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Publish Date", name: "date", widget: "datetime" }
-      - { label: "Category", name: "category", widget: "select", options: ["Industry News", "Data Security", "ESG & Sustainability", "Guides", "Case Studies"] }
-      - { label: "Featured Post?", name: "featured", widget: "boolean", default: false }
-      - { label: "Short Description", name: "description", widget: "text" }
-      - { label: "Featured Image", name: "image", widget: "image" }
-      - { label: "Author Name", name: "author", widget: "string", default: "IT Asset Solutions" }
-      - { label: "Author Avatar", name: "author_image", widget: "image", required: false }
-      - { label: "Body", name: "body", widget: "markdown" }
+      # --- CONTENT TAB ---
+      - { label: "Main Content", name: "content_tab", widget: "object", collapsed: false, fields: [
+          { label: "Article Title (H1)", name: "title", widget: "string", hint: "Keep it under 70 characters" },
+          { label: "Publish Date", name: "date", widget: "datetime" },
+          { label: "Category", name: "category", widget: "select", options: ["Industry News", "Data Security", "ESG & Sustainability", "Guides", "Case Studies"] },
+          { label: "Featured Image", name: "image", widget: "image", hint: "Upload a high-res image (1200x630px)" },
+          { label: "Image Alt Text", name: "image_alt", widget: "string", hint: "Describe image for SEO (include focus keyword)" },
+          { label: "Body Content", name: "body", widget: "markdown", hint: "Use H2 and H3 for subheadings" }
+        ]}
+
+      # --- AUTHOR TAB ---
+      - { label: "Author Info", name: "author_tab", widget: "object", collapsed: true, fields: [
+          { label: "Author Name", name: "author", widget: "string", default: "IT Asset Solutions" },
+          { label: "Author Profile Image", name: "author_image", widget: "image", required: false }
+        ]}
+
+      # --- SEO OPTIMIZATION TAB (The "Yoast" Features) ---
+      - { label: "SEO Settings", name: "seo_tab", widget: "object", collapsed: false, fields: [
+          { label: "Focus Keyword", name: "focus_keyword", widget: "string", hint: "The main keyword you want to rank for" },
+          { label: "SEO Meta Title", name: "seo_title", widget: "string", hint: "Different from H1? Leave blank to use Article Title." },
+          { label: "Meta Description", name: "meta_description", widget: "text", hint: "155-160 characters. Must include Focus Keyword." },
+          { label: "Canonical URL", name: "canonical_url", widget: "string", required: false, hint: "Only if this is a repost from another site" },
+          { label: "Schema Type", name: "schema_type", widget: "select", default: "BlogPosting", options: ["BlogPosting", "NewsArticle", "TechArticle"] }
+        ]}
