@@ -1,308 +1,301 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useMemo } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import {
-  Shield,
-  Lock,
-  TrendingUp,
-  ShoppingCart,
-  ArrowRight,
-  CheckCircle,
-  Zap,
-  Star,
-  Sparkles
+import { Link } from 'react-router-dom';
+import { 
+  ShieldCheck, HardDrive, Truck, 
+  Recycle, Server, Laptop, 
+  Activity, ArrowRight,
+  Globe, TrendingUp, Mail, 
+  Lock, FileBarChart, CheckCircle2, Wrench,
+  Database, Zap, Scale, BarChart3
 } from 'lucide-react';
 
-const Services: React.FC = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
+// Components
+import ContactLocation from '../components/ContactLocation';
+import SecureProcess from '../components/SecureProcess';
+import MidPageLeadCapture from '../components/MidPageLeadCapture';
+import FAQ from '../components/FAQ';
+import Contact from '../components/Contact';
+
+const ServicesPage: React.FC = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const services = [
     {
-      icon: Shield,
-      title: 'Enterprise IT Asset Disposition (ITAD)',
-      href: '/services/enterprise-itad',
-      description: 'Comprehensive ITAD services for the secure, compliant disposal of retired technology with a focus on environmental responsibility.',
-      features: ['NIST 800-88 certified destruction', 'Full compliance documentation', 'Sustainable recycling'],
-      color: 'from-curious-blue to-java',
-      iconColor: 'text-curious-blue',
-      bgGradient: 'from-curious-blue/10 to-java/10'
-    },
-    {
-      icon: Lock,
-      title: 'Secure Data Destruction & Sanitization',
-      href: '/services/secure-data-destruction',
-      description: 'Data wiping and physical destruction adhering to NIST 800-88 standards, with Certificates of Destruction provided for complete compliance.',
-      features: ['DOD/NIST standards', 'Certificates provided', 'Chain of custody'],
-      color: 'from-java to-fountain-blue',
-      iconColor: 'text-java',
-      bgGradient: 'from-java/10 to-fountain-blue/10'
-    },
-    {
+      id: 'buy',
       icon: TrendingUp,
-      title: 'IT Asset Value Recovery & Remarketing',
-      href: '/services/it-asset-value-recovery',
-      description: 'Maximize returns through our global remarketing channels and expert asset valuation for optimal value recovery.',
-      features: ['Global sales channels', 'Maximum ROI focus', 'Professional remarketing'],
-      color: 'from-mountain-meadow to-tradewind',
-      iconColor: 'text-mountain-meadow',
-      bgGradient: 'from-mountain-meadow/10 to-tradewind/10'
+      title: 'We Buy IT Equipment',
+      subtitle: 'Asset Value Recovery',
+      description: 'Turn retired assets into working capital. We provide upfront cash offers for Servers, Laptops, and Data Center gear.',
+      link: '/services/corporate-it-buyback', 
+      color: 'blue',
+      gradient: 'from-blue-500/10 to-cyan-400/10',
+      iconColor: 'text-blue-600',
+      borderColor: 'hover:border-blue-400'
     },
     {
-      icon: ShoppingCart,
-      title: 'Wholesale IT Equipment Sales',
-      href: '/wholesale-it-equipment',
-      description: 'Professionally tested, cosmetically graded used IT equipment available for bulk purchase by businesses and resellers.',
-      features: ['R2 standards aligned', 'Transparent grading', 'Enterprise-grade hardware'],
-      color: 'from-tradewind to-fountain-blue',
-      iconColor: 'text-tradewind',
-      bgGradient: 'from-tradewind/10 to-fountain-blue/10'
+      id: 'sell',
+      icon: Mail,
+      title: 'Wholesale Inventory',
+      subtitle: 'Exclusive Email Broadcasts',
+      description: 'We sell bulk enterprise hardware exclusively through our private email list to registered wholesale buyers.',
+      link: '/wholesale-it-equipment',
+      color: 'emerald',
+      gradient: 'from-emerald-500/10 to-teal-400/10',
+      iconColor: 'text-emerald-600',
+      borderColor: 'hover:border-emerald-400'
+    },
+    {
+      id: 'recycle',
+      icon: Recycle,
+      title: 'Enterprise ITAD',
+      subtitle: 'Zero Landfill Recycling',
+      description: 'Responsible recycling for end-of-life assets. We adhere to strict environmental standards to ensure compliance.',
+      link: '/services/enterprise-itad',
+      color: 'lime',
+      gradient: 'from-lime-500/10 to-green-400/10',
+      iconColor: 'text-lime-600',
+      borderColor: 'hover:border-lime-400'
+    },
+    {
+      id: 'data',
+      icon: Lock,
+      title: 'Data Destruction',
+      subtitle: 'NIST 800-88 Compliant',
+      description: 'Secure data wiping and physical shredding. We guarantee 100% data unrecoverability on all storage media.',
+      link: '/services/secure-data-destruction',
+      color: 'cyan',
+      gradient: 'from-cyan-500/10 to-sky-400/10',
+      iconColor: 'text-cyan-600',
+      borderColor: 'hover:border-cyan-400'
+    },
+    {
+      id: 'logistics',
+      icon: Truck,
+      title: 'Nationwide Logistics',
+      subtitle: 'White-Glove Pickup',
+      description: 'Secure chain-of-custody transport from any zip code in the USA to our Michigan processing hub.',
+      link: '/services/secure-chain-of-custody-logistics',
+      color: 'indigo',
+      gradient: 'from-indigo-500/10 to-violet-400/10',
+      iconColor: 'text-indigo-600',
+      borderColor: 'hover:border-indigo-400'
+    },
+    {
+      id: 'compliance',
+      icon: FileBarChart,
+      title: 'Auditing & Reporting',
+      subtitle: 'Audit-Ready Documentation',
+      description: 'Full serialized reporting and Certificates of Destruction provided for every job to satisfy legal audits.',
+      link: '/services/auditing-compliance-reporting',
+      color: 'sky',
+      gradient: 'from-sky-500/10 to-blue-400/10',
+      iconColor: 'text-sky-600',
+      borderColor: 'hover:border-sky-400'
     }
   ];
 
   return (
-    <section id="services" className="relative py-32 bg-gradient-to-br from-gray-50 via-white to-jagged-ice overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 opacity-30">
-          <motion.div
-            className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-curious-blue/20 to-mountain-meadow/20 rounded-full blur-3xl"
-            animate={{ 
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.6, 0.3]
-            }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="will-change-transform"
-          />
-          <motion.div
-            className="absolute bottom-20 right-20 w-80 h-80 bg-gradient-to-br from-java/20 to-tradewind/20 rounded-full blur-3xl"
-            animate={{ 
-              scale: [1.2, 1, 1.2],
-              opacity: [0.4, 0.7, 0.4]
-            }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-            className="will-change-transform"
-          />
-        </div>
+    <>
+      <Helmet>
+        <title>ITAD Services & Data Destruction | IT Asset Solutions</title>
+        <meta name="description" content="Explore our full suite of IT Asset Disposition services: Enterprise ITAD, Secure Data Destruction, Value Recovery, and Logistics." />
+        <link rel="canonical" href="https://www.itassetsolutions.com/services" />
+      </Helmet>
 
-        {[...Array(5)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute will-change-transform"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -40, 0],
-              opacity: [0.1, 0.3, 0.1]
-            }}
-            transition={{
-              duration: 8,
-              delay: Math.random() * 3,
-              repeat: Infinity,
-              repeatType: "loop"
-            }}
-          >
-            <div className="w-3 h-3 bg-gradient-to-br from-curious-blue/30 to-mountain-meadow/30 rounded-full"></div>
-          </motion.div>
-        ))}
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 50 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1 }}
-          className="text-center mb-20"
-        >
-          <motion.div
-            className="inline-flex items-center space-x-3 bg-gradient-to-r from-curious-blue/10 to-mountain-meadow/10 backdrop-blur-xl border border-curious-blue/20 px-8 py-4 rounded-full mb-8"
-            initial={{ opacity: 0, scale: 0.8, y: 30 }}
-            animate={inView ? { opacity: 1, scale: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            whileHover={{ scale: 1.05, y: -2 }}
-          >
-            <Sparkles className="w-6 h-6 text-curious-blue" />
-            <span className="text-curious-blue font-bold text-lg">Complete IT Lifecycle Management</span>
-            <Star className="w-6 h-6 text-mountain-meadow fill-current" />
-          </motion.div>
-
-          <motion.h2
-            className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight"
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 1, delay: 0.4 }}
-          >
-            <span className="text-gray-900">Our Comprehensive Suite of </span>
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-curious-blue via-mountain-meadow to-java">
-              IT Management Services
-            </span>
-          </motion.h2>
-
-          <motion.div
-            className="max-w-5xl mx-auto"
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 1, delay: 0.6 }}
-          >
-            <div className="bg-white/80 backdrop-blur-xl border border-gray-200/50 rounded-3xl p-8 md:p-12 shadow-2xl">
-              <p className="text-xl md:text-2xl text-gray-700 leading-relaxed">
-                We offer a complete range of services tailored to meet your organization's specific needs at every stage of the IT lifecycle. 
-                From single-office clear-outs to enterprise-level disposition, we have a{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-curious-blue to-mountain-meadow font-bold">
-                  secure and profitable solution.
-                </span>
-              </p>
-            </div>
-          </motion.div>
-        </motion.div>
-
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 relative">
-          {/* Connecting lines for visual flow */}
-          <div className="absolute inset-0 pointer-events-none hidden lg:block">
-            <svg className="w-full h-full opacity-10">
-              <defs>
-                <linearGradient id="serviceGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#18a9df" />
-                  <stop offset="50%" stopColor="#20c36e" />
-                  <stop offset="100%" stopColor="#17b2b1" />
-                </linearGradient>
-              </defs>
-              <path d="M200,150 Q400,100 600,150 Q800,200 1000,150" stroke="url(#serviceGradient)" strokeWidth="2" fill="none" />
-              <path d="M200,350 Q400,300 600,350 Q800,400 1000,350" stroke="url(#serviceGradient)" strokeWidth="2" fill="none" />
-              <path d="M200,550 Q400,500 600,550 Q800,600 1000,550" stroke="url(#serviceGradient)" strokeWidth="2" fill="none" />
-            </svg>
-          </div>
+      <main className="w-full overflow-x-hidden bg-white">
+        
+        {/* --- STUNNING HERO SECTION --- */}
+        <section className="relative min-h-[90vh] lg:h-screen flex flex-col justify-center bg-[#050B14] text-white overflow-hidden pt-32 lg:pt-0">
           
-          {services.map((service, index) => (
-            <motion.div
-              key={service.title}
-              className="group relative overflow-hidden z-10"
-              initial={{ opacity: 0, y: 50, scale: 0.9 }}
-              animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
-              transition={{ duration: 0.8, delay: 0.8 + index * 0.1 }}
-              whileHover={{ y: -15, scale: 1.02 }}
-            >
-              <div className={`relative bg-gradient-to-br ${service.bgGradient} backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl group-hover:shadow-3xl transition-all duration-500 overflow-hidden h-full`}>
-                {/* Service number indicator */}
-                <div className="absolute top-4 right-4 w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                  <span className="text-sm font-bold text-gray-700">{index + 1}</span>
-                </div>
-                
-                {/* Animated background pattern */}
-                <div className="absolute inset-0 opacity-5">
-                  <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-white to-transparent rounded-full transform -translate-x-16 -translate-y-16 group-hover:scale-150 transition-transform duration-700" />
-                  <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tl from-white to-transparent rounded-full transform translate-x-12 translate-y-12 group-hover:scale-150 transition-transform duration-700" />
-                </div>
-                
-                <motion.div
-                  className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
-                />
+          {/* Background FX */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/30 via-[#050B14] to-[#050B14]"></div>
+          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 pointer-events-none"></div>
+          
+          {/* Animated Grid Lines */}
+          <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px)', backgroundSize: '50px 50px' }}></div>
 
-                <div className="relative z-10">
-                  <motion.div
-                    className={`inline-flex p-5 rounded-2xl bg-gradient-to-br ${service.color} shadow-xl mb-6 group-hover:shadow-2xl transition-all duration-300`}
-                    whileHover={{ rotate: 5, scale: 1.15 }}
-                    transition={{ duration: 0.6 }}
-                    className="will-change-transform"
+          <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-grow flex items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center w-full">
+              
+              {/* Left Column: Text */}
+              <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-8 font-grotesk">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                  </span>
+                  Comprehensive IT Solutions
+                </div>
+                
+                {/* UPDATED FONT & SIZE */}
+                <h1 className="text-5xl lg:text-7xl font-bold leading-tight mb-6 font-grotesk tracking-tight">
+                  Lifecycle <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">
+                    Reimagined.
+                  </span>
+                </h1>
+                
+                <p className="text-lg text-slate-400 mb-10 leading-relaxed max-w-xl border-l-2 border-indigo-500/50 pl-6">
+                  We don't just dispose of electronics. We secure data, recover value, and protect your brand through a seamless suite of IT lifecycle services.
+                </p>
+
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Link 
+                    to="/contact" 
+                    className="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white bg-blue-600 rounded-xl hover:bg-blue-700 transition-all shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)] hover:-translate-y-1 font-grotesk"
                   >
-                    <service.icon className="w-10 h-10 text-white" />
-                  </motion.div>
-
-                  <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-gray-800 transition-colors">
-                    {service.title}
-                  </h3>
-                  <p className="text-gray-600 mb-6 leading-relaxed group-hover:text-gray-700 transition-colors">
-                    {service.description}
-                  </p>
-
-                  <div className="space-y-3 mb-8">
-                    {service.features.map((feature, featureIndex) => (
-                      <motion.div
-                        key={featureIndex}
-                        className="flex items-center space-x-3"
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={inView ? { opacity: 1, x: 0 } : {}}
-                        transition={{ duration: 0.4, delay: (0.8 + index * 0.1) + (featureIndex * 0.1) }}
-                      >
-                        <motion.div
-                          className={`p-1 rounded-full bg-gradient-to-r ${service.color} shadow-md`}
-                          whileHover={{ scale: 1.2, rotate: 180 }}
-                          transition={{ duration: 0.3 }}
-                        >
-                          <CheckCircle className="w-4 h-4 text-white" />
-                        </motion.div>
-                        <span className="text-gray-600 font-medium group-hover:text-gray-700 transition-colors text-sm">
-                          {feature}
-                        </span>
-                      </motion.div>
-                    ))}
-                  </div>
-
-                  <Link to={service.href}>
-                    <motion.button
-                      className={`flex items-center space-x-3 font-bold ${service.iconColor} group-hover:translate-x-2 transition-all duration-300 bg-white/60 backdrop-blur-sm px-6 py-3 rounded-full border border-white/40 group-hover:bg-white/90 group-hover:shadow-xl relative overflow-hidden`}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                      <span>Explore Service</span>
-                      <ArrowRight className="w-5 h-5" />
-                    </motion.button>
+                    Start Recovery Process
                   </Link>
+                  <a 
+                    href="#core-services" 
+                    className="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-slate-300 border border-slate-700 rounded-xl hover:bg-slate-800 hover:text-white transition-all font-grotesk"
+                  >
+                    Explore Services
+                  </a>
                 </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* CTA Section */}
-        <motion.div
-          className="text-center"
-          initial={{ opacity: 0, y: 50 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1, delay: 1.8 }}
-        >
-          <div className="bg-gradient-to-r from-curious-blue via-mountain-meadow to-java rounded-3xl p-12 text-white relative overflow-hidden shadow-2xl">
-            <div className="relative z-10">
-              <motion.div
-                className="inline-flex items-center space-x-2 bg-white/20 px-6 py-3 rounded-full mb-6"
-                whileHover={{ scale: 1.05 }}
-              >
-                <Zap className="w-5 h-5" />
-                <span className="font-semibold">Custom Solutions Available</span>
               </motion.div>
 
-              <h3 className="text-3xl md:text-4xl font-bold mb-6">
-                Need a Custom Solution?
-              </h3>
-              <p className="text-xl mb-8 opacity-90 max-w-3xl mx-auto">
-                We work with you to create tailored IT asset management programs for your specific requirements. 
-                From compliance needs to value recovery goals, we deliver results.
-              </p>
-              
-              <motion.button
-                className="bg-white text-curious-blue px-10 py-5 rounded-full font-bold text-xl hover:bg-gray-100 transition-colors shadow-xl flex items-center space-x-3 mx-auto"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span>Get Started</span>
-                <ArrowRight className="w-6 h-6" />
-              </motion.button>
+              {/* Right Column: Floating Service Nodes */}
+              <div className="relative h-[500px] w-full hidden lg:flex items-center justify-center">
+                {/* Central Hub */}
+                <div className="absolute z-20 w-32 h-32 bg-slate-900 rounded-full border-4 border-indigo-500/30 flex items-center justify-center shadow-[0_0_60px_rgba(99,102,241,0.2)]">
+                  <div className="text-center">
+                    <Activity className="w-10 h-10 text-indigo-400 mx-auto mb-1" />
+                    <span className="text-[10px] font-bold text-white uppercase tracking-widest font-grotesk">Core<br/>Hub</span>
+                  </div>
+                </div>
+
+                {/* Orbiting Nodes */}
+                <motion.div animate={{ y: [-15, 15, -15] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }} className="absolute top-10 left-10 z-10 bg-slate-800/80 backdrop-blur-md p-4 rounded-2xl border border-slate-700 shadow-xl w-48">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="p-2 bg-blue-500/20 rounded-lg"><ShieldCheck className="w-5 h-5 text-blue-400" /></div>
+                    <div className="text-sm font-bold text-white font-grotesk">Data Security</div>
+                  </div>
+                  <div className="h-1.5 w-full bg-slate-700 rounded-full overflow-hidden">
+                    <div className="h-full w-full bg-blue-500 animate-pulse"></div>
+                  </div>
+                  <div className="flex justify-between mt-1 text-[10px] text-slate-400">
+                    <span>NIST 800-88</span>
+                    <span>ACTIVE</span>
+                  </div>
+                </motion.div>
+
+                <motion.div animate={{ y: [20, -20, 20] }} transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }} className="absolute bottom-20 right-0 z-10 bg-slate-800/80 backdrop-blur-md p-4 rounded-2xl border border-slate-700 shadow-xl w-48">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="p-2 bg-green-500/20 rounded-lg"><Truck className="w-5 h-5 text-green-400" /></div>
+                    <div className="text-sm font-bold text-white font-grotesk">Logistics</div>
+                  </div>
+                   <div className="text-[10px] text-slate-300 bg-slate-700/50 p-1.5 rounded mb-1">
+                      <span className="text-green-400">●</span> Transit: MI Hub
+                   </div>
+                </motion.div>
+
+                {/* Connectivity Lines */}
+                <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-30">
+                  <line x1="50%" y1="50%" x2="20%" y2="20%" stroke="#6366f1" strokeWidth="1" strokeDasharray="5,5" />
+                  <line x1="50%" y1="50%" x2="80%" y2="70%" stroke="#6366f1" strokeWidth="1" strokeDasharray="5,5" />
+                </svg>
+              </div>
+
             </div>
           </div>
-        </motion.div>
-      </div>
-    </section>
+        </section>
+
+        {/* --- CORE SERVICES GRID --- */}
+        <section id="core-services" className="py-24 bg-white relative overflow-hidden z-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-6 font-grotesk">
+                <Globe className="w-4 h-4 text-blue-600" />
+                <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">Complete Lifecycle Solutions</span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 font-grotesk">
+                Our Core <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-emerald-500">Services</span>
+              </h2>
+              <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+                From purchasing your retired hardware to secure data destruction and final recycling, we handle every step of the process nationwide.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+              {services.map((service, index) => (
+                <motion.div
+                  key={service.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className={`group relative flex flex-col h-full bg-white border border-slate-200 rounded-2xl p-8 transition-all duration-300 hover:shadow-xl ${service.borderColor} hover:-translate-y-1`}
+                >
+                  <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+                  <div className={`relative w-14 h-14 rounded-xl flex items-center justify-center mb-6 bg-slate-50 group-hover:bg-white group-hover:shadow-sm transition-all ${service.iconColor}`}>
+                    <service.icon className="w-7 h-7" />
+                  </div>
+                  <div className="relative">
+                    <h3 className="text-xl font-bold text-slate-900 mb-2 font-grotesk">{service.title}</h3>
+                    <p className={`text-xs font-bold uppercase tracking-wider mb-4 ${service.iconColor} font-grotesk`}>{service.subtitle}</p>
+                    <p className="text-slate-600 mb-8 leading-relaxed text-sm">{service.description}</p>
+                    <Link to={service.link} className={`inline-flex items-center font-bold text-sm ${service.iconColor} hover:opacity-80 transition-opacity font-grotesk`}>
+                      Learn More <ArrowRight className="w-4 h-4 ml-2" />
+                    </Link>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* --- CIRCULAR ECONOMY VISUAL --- */}
+        <section className="py-24 bg-slate-900 text-white overflow-hidden relative">
+           <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+             <div className="grid lg:grid-cols-2 gap-16 items-center">
+               <div>
+                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-900/50 border border-green-500/50 text-green-400 text-xs font-bold uppercase tracking-wider mb-6 font-grotesk">
+                    <Recycle className="w-4 h-4" /> Sustainable Impact
+                 </div>
+                 <h2 className="text-4xl font-bold mb-6 font-grotesk">The Lifecycle Approach</h2>
+                 <p className="text-lg text-slate-400 mb-8 leading-relaxed">
+                   We view IT disposal not as an end, but as a new beginning. By prioritizing reuse over recycling, we help companies reduce their carbon footprint while recovering residual value.
+                 </p>
+                 <div className="space-y-6">
+                   <div className="flex gap-4">
+                     <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center flex-shrink-0 text-green-400 font-bold text-xl font-grotesk">1</div>
+                     <div><h4 className="font-bold text-lg font-grotesk">Assess & Recover</h4><p className="text-slate-400 text-sm">We audit assets to identify high-value units for refurbishment.</p></div>
+                   </div>
+                   <div className="flex gap-4">
+                     <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center flex-shrink-0 text-blue-400 font-bold text-xl font-grotesk">2</div>
+                     <div><h4 className="font-bold text-lg font-grotesk">Sanitize & Refurbish</h4><p className="text-slate-400 text-sm">Data is wiped, and hardware is repaired for a second life.</p></div>
+                   </div>
+                   <div className="flex gap-4">
+                     <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center flex-shrink-0 text-purple-400 font-bold text-xl font-grotesk">3</div>
+                     <div><h4 className="font-bold text-lg font-grotesk">Responsible Recycling</h4><p className="text-slate-400 text-sm">End-of-life material is shredded and separated for raw material recovery.</p></div>
+                   </div>
+                 </div>
+               </div>
+               {/* Visual Diagram Placeholder */}
+               <div className="relative h-[400px] bg-slate-800/50 rounded-full border border-slate-700 flex items-center justify-center">
+                  <div className="absolute inset-0 animate-[spin_10s_linear_infinite] rounded-full border border-dashed border-slate-600"></div>
+                  <div className="text-center">
+                    <Recycle className="w-24 h-24 text-green-500 mx-auto mb-4 opacity-80" />
+                    <div className="text-2xl font-bold font-grotesk">Circular<br/>Economy</div>
+                  </div>
+               </div>
+             </div>
+           </div>
+        </section>
+
+        <SecureProcess />
+        <MidPageLeadCapture />
+        <FAQ />
+        <Contact />
+      </main>
+    </>
   );
 };
 
-export default Services;
+export default ServicesPage;
