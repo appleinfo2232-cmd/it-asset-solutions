@@ -1,0 +1,37 @@
+# --- 1. DOMAIN & SECURITY (The Fortress Wall) ---
+# Force HTTPS and WWW for consistent identity and security.
+# The '!' ensures this rule overrides everything else.
+http://itassetsolutions.com/* https://www.itassetsolutions.com/:splat  301!
+https://itassetsolutions.com/* https://www.itassetsolutions.com/:splat  301!
+
+# --- 2. ANTI-SPAM & SECURITY BLOCK (Save Bandwidth) ---
+# Immediately reject bots looking for WordPress or sensitive server files.
+# This keeps your site fast for real humans.
+/*.php       /404  404
+/*.env       /404  404
+/wp-login    /404  404
+/wp-admin/* /404  404
+/xmlrpc.php  /404  404
+
+# --- 3. SEO PRESERVATION (Legacy Redirects) ---
+# Direct old traffic to your new, high-value pages.
+
+# Old "Disposition/Management" -> New "Enterprise ITAD"
+/services/it-asset-disposition   /services/enterprise-itad  301
+/services/it-asset-management    /services/enterprise-itad  301
+/services/e-waste-recycling      /services/enterprise-itad  301
+/services/computer-recycling     /services/enterprise-itad  301
+
+# Old "Recycling" -> New "Value Recovery"
+/services/hardware-recycling     /services/it-asset-value-recovery  301
+/services/asset-recovery         /services/it-asset-value-recovery  301
+
+# Old "Destruction" -> New "Secure Data Destruction"
+/services/data-destruction       /services/secure-data-destruction  301
+/services/secure-data-wiping     /services/secure-data-destruction  301
+/services/hard-drive-shredding   /services/secure-data-destruction  301
+
+# --- 4. REACT APP ROUTING (The Engine) ---
+# CRITICAL: This must be the very last line.
+# If no specific file or redirect matches above, load the React App.
+/* /index.html   200

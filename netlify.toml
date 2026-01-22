@@ -1,0 +1,26 @@
+[build]
+  publish = "dist"
+  command = "npm run build"
+
+[[redirects]]
+  from = "https://itassetsolutions.com/*"
+  to = "https://www.itassetsolutions.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://itassetsolutions.com/*"
+  to = "https://www.itassetsolutions.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.itassetsolutions.com/*"
+  to = "https://www.itassetsolutions.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

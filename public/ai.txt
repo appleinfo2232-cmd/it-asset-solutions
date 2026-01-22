@@ -1,0 +1,20 @@
+# ai.txt - 2026 Standard
+# This file grants permission for citation (visibility) 
+# but restricts unauthorized model training (protection).
+
+User-agent: Google-Extended
+Allow: /
+Usage: citation
+
+User-agent: GPTBot
+Allow: /
+Usage: citation
+
+User-agent: ClaudeBot
+Allow: /
+Usage: citation
+
+# Disallow generic training on private data
+User-agent: *
+Disallow: /private/
+Usage: training-opt-out

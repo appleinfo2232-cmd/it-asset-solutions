@@ -1,0 +1,54 @@
+# --- 2026 AI VISIBILITY & AGENT CONTROL ---
+
+# 1. Allow Google's Ecosystem (Search + AI Overviews)
+# Google-Extended controls Bard/Gemini specifically
+User-agent: Googlebot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+
+# 2. Allow ChatGPT & OpenAI Search
+# Critical for conversational traffic
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+
+# 3. Allow Bing/Microsoft Copilot
+User-agent: Bingbot
+Allow: /
+
+# --- RESOURCE PROTECTION ---
+
+# 4. Block Aggressive Data Scrapers (Cost Saving)
+# These bots scrape for LLM training but rarely send traffic back
+User-agent: CCBot
+Disallow: /
+User-agent: Bytespider
+Disallow: /
+User-agent: anthropic-ai
+Disallow: /
+User-agent: ClaudeBot
+Disallow: /
+User-agent: Amazonbot
+Disallow: /
+
+# --- GENERAL RULES ---
+
+User-agent: *
+Allow: /
+
+# 5. Prevent Duplicate Content Indexing
+# Blocks search result pages or filtered views from being indexed
+Disallow: /search?
+Disallow: /*?sort=
+Disallow: /*?filter=
+
+# 6. Security Blocks
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+Disallow: /drafts/
+
+# --- SITEMAP ---
+Sitemap: https://www.itassetsolutions.com/sitemap.xml
