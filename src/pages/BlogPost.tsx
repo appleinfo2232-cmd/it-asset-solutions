@@ -6,97 +6,78 @@ import { getPostBySlug, getAllPosts, BlogPost as PostType } from '../utils/blogL
 import ContactLocation from '../components/ContactLocation';
 import { 
   ArrowLeft, Calendar, Clock, User, Share2, 
-  CheckCircle, ChevronRight, List, ArrowRight 
+  Linkedin, Twitter, Facebook, CheckCircle, ArrowRight 
 } from 'lucide-react';
+import { motion, useScroll, useSpring } from 'framer-motion';
 
 const BlogPost: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const [post, setPost] = useState<PostType | null>(null);
   const [relatedPosts, setRelatedPosts] = useState<PostType[]>([]);
+  
+  // Progress Bar Hook
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
-  // --- 1. DATA LOADING & RELATED POSTS ---
+  // --- 1. DATA LOADING ---
   useEffect(() => {
     if (slug) {
       getPostBySlug(slug).then((data) => {
         const now = new Date();
-        
-        // Security: Redirect if post doesn't exist or is scheduled for future
+        // Security check
         if (!data || new Date(data.date) > now) {
           navigate('/blog');
           return;
         }
         setPost(data);
 
-        // VISIBILITY BOOST: Load Related Posts to keep users engaged
+        // Load Related Posts
         getAllPosts().then(allPosts => {
           const others = allPosts
             .filter(p => p.slug !== data.slug && p.category === data.category && new Date(p.date) <= now)
-            .slice(0, 2); // Show 2 related articles
+            .slice(0, 2);
           setRelatedPosts(others);
         });
       });
     }
-    window.scrollTo(0, 0);
+    // Reset scroll to top smoothly
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [slug, navigate]);
 
-  // --- 2. 2026 SEO: ADVANCED SCHEMA (Voice + Breadcrumbs) ---
+  // --- 2. SEO & SCHEMA ---
   const schemaData = useMemo(() => {
     if (!post) return null;
     return {
       "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.itassetsolutions.com" },
-            { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.itassetsolutions.com/blog" },
-            { "@type": "ListItem", "position": 3, "name": post.title }
-          ]
-        },
-        {
-          "@type": "BlogPosting",
-          "headline": post.seoTitle || post.title,
-          "description": post.metaDescription,
-          "image": [`https://www.itassetsolutions.com${post.image}`],
-          "datePublished": new Date(post.date).toISOString(),
-          "dateModified": new Date(post.date).toISOString(),
-          "author": { "@type": "Organization", "name": post.author },
-          "publisher": {
-             "@type": "Organization",
-             "name": "IT Asset Solutions",
-             "logo": { "@type": "ImageObject", "url": "https://www.itassetsolutions.com/it-asset-solutions-new-logo.avif" }
-          },
-          // VOICE SEARCH OPTIMIZATION
-          "speakable": {
-            "@type": "SpeakableSpecification",
-            "cssSelector": ["h1", ".ai-summary"]
-          }
-        }
-      ]
+      "@type": "BlogPosting",
+      "headline": post.seoTitle || post.title,
+      "description": post.metaDescription,
+      "image": [`https://www.itassetsolutions.com${post.image}`],
+      "datePublished": new Date(post.date).toISOString(),
+      "author": { "@type": "Organization", "name": post.author },
+      "publisher": {
+         "@type": "Organization",
+         "name": "IT Asset Solutions",
+         "logo": { "@type": "ImageObject", "url": "https://www.itassetsolutions.com/it-asset-solutions-new-logo.avif" }
+      }
     };
   }, [post]);
 
-  // --- 3. FUNCTIONAL SHARE BUTTON ---
-  const handleShare = async () => {
-    if (navigator.share && post) {
-      try {
-        await navigator.share({
-          title: post.title,
-          text: post.metaDescription,
-          url: window.location.href,
-        });
-      } catch (err) {
-        console.log('Share canceled');
-      }
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({ title: post?.title, url: window.location.href }).catch(console.error);
     } else {
-      // Fallback: Copy to clipboard
       navigator.clipboard.writeText(window.location.href);
-      alert('Link copied to clipboard!');
+      alert('Link copied to clipboard.');
     }
   };
 
-  if (!post) return <div className="min-h-screen flex items-center justify-center">Loading article...</div>;
+  if (!post) return <div className="min-h-screen flex items-center justify-center bg-gray-50">Loading briefing...</div>;
 
   return (
     <>
@@ -104,130 +85,165 @@ const BlogPost: React.FC = () => {
         <title>{post.seoTitle || post.title} | IT Asset Solutions</title>
         <meta name="description" content={post.metaDescription} />
         <link rel="canonical" href={`https://www.itassetsolutions.com/blog/${post.slug}`} />
-        {/* Open Graph / Social */}
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content={post.seoTitle || post.title} />
-        <meta property="og:description" content={post.metaDescription} />
-        <meta property="og:image" content={`https://www.itassetsolutions.com${post.image}`} />
         {schemaData && <script type="application/ld+json">{JSON.stringify(schemaData)}</script>}
       </Helmet>
 
-      <main className="pt-32 pb-20 bg-white min-h-screen">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          {/* Breadcrumb Navigation */}
-          <div className="flex items-center text-sm text-slate-500 mb-8 overflow-x-auto whitespace-nowrap">
-            <Link to="/" className="hover:text-[#0ea5e9]">Home</Link>
-            <ChevronRight className="w-4 h-4 mx-2" />
-            <Link to="/blog" className="hover:text-[#0ea5e9]">Insights</Link>
-            <ChevronRight className="w-4 h-4 mx-2" />
-            <span className="text-slate-900 font-medium truncate">{post.title}</span>
-          </div>
+      {/* READING PROGRESS BAR */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1.5 bg-[#0ea5e9] origin-left z-50"
+        style={{ scaleX }}
+      />
 
-          {/* Category Pill */}
-          <div className="mb-6">
-            <span className="bg-blue-50 text-[#0ea5e9] px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+      <main className="pt-32 pb-24 bg-white min-h-screen font-sans">
+        
+        {/* --- ARTICLE HEADER --- */}
+        <div className="max-w-3xl mx-auto px-6 lg:px-8 mb-12 text-center">
+          
+          <Link to="/blog" className="inline-flex items-center text-slate-500 hover:text-[#0ea5e9] mb-8 text-sm font-semibold tracking-wide uppercase transition-colors">
+            <ArrowLeft className="w-4 h-4 mr-2" /> Back to Intelligence
+          </Link>
+
+          <div className="mb-6 flex justify-center">
+            <span className="bg-slate-100 text-slate-700 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-slate-200">
               {post.category}
             </span>
           </div>
 
-          {/* H1 Title */}
-          <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-8 leading-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 mb-8 leading-tight tracking-tight">
             {post.title}
           </h1>
 
-          {/* Author Bar */}
-          <div className="flex flex-wrap items-center justify-between border-b border-gray-100 pb-8 mb-8 gap-4">
-            <div className="flex items-center gap-4">
-               <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center border border-slate-200">
-                 <User className="w-6 h-6 text-slate-400"/>
+          {/* Premium Author Byline */}
+          <div className="flex items-center justify-center gap-6 text-sm border-y border-gray-100 py-6">
+            <div className="flex items-center gap-3">
+               <div className="w-10 h-10 bg-slate-900 rounded-full flex items-center justify-center text-white">
+                 <User className="w-5 h-5"/>
                </div>
-               <div>
-                 <p className="font-bold text-slate-900">{post.author}</p>
-                 <div className="flex items-center text-xs text-gray-500 gap-3">
-                   <span className="flex items-center"><Calendar className="w-3 h-3 mr-1" /> {post.displayDate}</span>
-                   <span className="flex items-center"><Clock className="w-3 h-3 mr-1" /> {post.readTime}</span>
-                 </div>
+               <div className="text-left">
+                 <p className="font-bold text-slate-900 leading-none mb-1">{post.author}</p>
+                 <p className="text-slate-500 text-xs">Editorial Team</p>
                </div>
             </div>
-            
-            {/* Working Share Button */}
-            <button 
-              onClick={handleShare}
-              className="flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 hover:bg-[#0ea5e9] hover:text-white transition-colors text-slate-600 font-medium text-sm"
-            >
-              <Share2 className="w-4 h-4" /> Share Article
-            </button>
+            <div className="h-8 w-px bg-gray-200 hidden sm:block"></div>
+            <div className="text-slate-500 font-medium flex gap-4">
+               <span className="flex items-center"><Calendar className="w-4 h-4 mr-2 text-slate-400" /> {post.displayDate}</span>
+               <span className="flex items-center"><Clock className="w-4 h-4 mr-2 text-slate-400" /> {post.readTime}</span>
+            </div>
           </div>
+        </div>
 
-          {/* Featured Image */}
-          <div className="rounded-3xl overflow-hidden shadow-xl mb-12 bg-slate-100">
+        {/* --- FEATURED IMAGE (Wide) --- */}
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 mb-16">
+          <div className="rounded-2xl overflow-hidden shadow-2xl">
             <img 
               src={post.image} 
               alt={post.imageAlt} 
-              className="w-full object-cover max-h-[500px]"
+              className="w-full h-auto object-cover max-h-[600px]"
               loading="eager"
             />
           </div>
+        </div>
 
-          {/* AI Summary (Voice Search Friendly) */}
-          {post.aiSummary && (
-            <div className="ai-summary bg-blue-50/50 border border-blue-100 rounded-2xl p-6 mb-12">
-              <h3 className="text-sm font-bold text-[#0ea5e9] uppercase tracking-wide mb-3 flex items-center">
-                <CheckCircle className="w-4 h-4 mr-2" /> Key Takeaways
-              </h3>
-              <p className="text-slate-800 text-lg leading-relaxed font-medium">
-                {post.aiSummary}
-              </p>
-            </div>
-          )}
-
-          {/* Content Body */}
-          <article className="prose prose-lg max-w-none text-slate-700 prose-headings:font-bold prose-headings:text-slate-900 prose-a:text-[#0ea5e9] prose-img:rounded-xl">
-             <ReactMarkdown 
-               components={{
-                 // Enhance headers for scan-ability
-                 h2: ({node, ...props}) => <h2 className="text-3xl mt-12 mb-6 scroll-mt-24" {...props} />,
-                 img: ({node, ...props}) => <img loading="lazy" className="shadow-lg my-8 w-full" {...props} />
-               }}
-             >
-               {post.body}
-             </ReactMarkdown>
-          </article>
-
-          {/* --- RELATED POSTS SECTION --- */}
-          {relatedPosts.length > 0 && (
-            <div className="mt-20 pt-10 border-t border-gray-200">
-              <h3 className="text-2xl font-bold text-slate-900 mb-8">Related Insights</h3>
-              <div className="grid md:grid-cols-2 gap-6">
-                {relatedPosts.map(rp => (
-                  <Link key={rp.slug} to={`/blog/${rp.slug}`} className="group block bg-gray-50 rounded-2xl p-6 hover:bg-white hover:shadow-lg transition-all border border-gray-100">
-                    <span className="text-xs font-bold text-[#0ea5e9] uppercase mb-2 block">{rp.category}</span>
-                    <h4 className="text-lg font-bold text-slate-900 group-hover:text-[#0ea5e9] transition-colors mb-2">
-                      {rp.title}
-                    </h4>
-                    <div className="flex items-center text-sm text-slate-500 font-medium">
-                      Read now <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12">
           
-          {/* CTA Box */}
-          <div className="mt-16 bg-slate-900 rounded-3xl p-8 md:p-12 text-center text-white relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#0ea5e9] to-[#22c55e]"></div>
-            <h3 className="text-2xl md:text-3xl font-bold mb-4">Secure Your Corporate IT Assets</h3>
-            <p className="text-slate-300 mb-8 max-w-xl mx-auto text-lg">
-              Ensure compliance and maximize value recovery with our certified ITAD solutions.
-            </p>
-            <Link to="/contact" className="inline-flex items-center bg-[#0ea5e9] text-white font-bold px-8 py-4 rounded-xl hover:bg-[#0284c7] transition-all hover:-translate-y-1">
-              Get a Free Valuation <ArrowRight className="w-5 h-5 ml-2" />
-            </Link>
+          {/* --- LEFT SIDEBAR (Socials - Desktop) --- */}
+          <div className="hidden lg:block lg:col-span-2 sticky top-32 h-fit">
+            <div className="flex flex-col gap-4 items-center">
+               <p className="text-xs font-bold text-slate-400 uppercase mb-2">Share</p>
+               <button onClick={handleShare} className="p-3 rounded-full bg-slate-50 text-slate-600 hover:bg-[#0ea5e9] hover:text-white transition-all shadow-sm"><Share2 className="w-5 h-5" /></button>
+               <button className="p-3 rounded-full bg-slate-50 text-slate-600 hover:bg-[#0077b5] hover:text-white transition-all shadow-sm"><Linkedin className="w-5 h-5" /></button>
+               <button className="p-3 rounded-full bg-slate-50 text-slate-600 hover:bg-black hover:text-white transition-all shadow-sm"><Twitter className="w-5 h-5" /></button>
+            </div>
           </div>
 
+          {/* --- MAIN CONTENT COLUMN --- */}
+          <article className="lg:col-span-8">
+            
+            {/* EXECUTIVE SUMMARY (Premium Look) */}
+            {post.aiSummary && (
+              <div className="mb-12 bg-slate-50 border-l-4 border-[#0ea5e9] p-8 rounded-r-xl">
+                <h3 className="text-sm font-bold text-slate-900 uppercase tracking-widest mb-4 flex items-center">
+                  <CheckCircle className="w-4 h-4 mr-2 text-[#0ea5e9]" /> Executive Summary
+                </h3>
+                <p className="text-slate-800 text-lg md:text-xl font-medium leading-relaxed italic">
+                  {post.aiSummary}
+                </p>
+              </div>
+            )}
+
+            {/* MARKDOWN CONTENT */}
+            <div className="prose prose-lg md:prose-xl max-w-none text-slate-700 
+              prose-headings:font-bold prose-headings:text-slate-900 prose-headings:tracking-tight 
+              prose-p:leading-8 prose-p:mb-6 
+              prose-a:text-[#0ea5e9] prose-a:font-bold prose-a:no-underline hover:prose-a:underline
+              prose-blockquote:border-l-4 prose-blockquote:border-slate-900 prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:text-slate-800
+              prose-img:rounded-xl prose-img:shadow-lg prose-img:my-10"
+            >
+               <ReactMarkdown>{post.body}</ReactMarkdown>
+            </div>
+
+            {/* MOBILE SHARE BAR */}
+            <div className="mt-12 lg:hidden flex items-center justify-between border-t border-gray-100 pt-8">
+               <span className="font-bold text-slate-900">Share this insight:</span>
+               <div className="flex gap-2">
+                 <button onClick={handleShare} className="p-2 bg-slate-100 rounded-full"><Share2 className="w-5 h-5" /></button>
+               </div>
+            </div>
+
+          </article>
+
+          {/* --- RIGHT SIDEBAR (Spacer / Future TOC) --- */}
+          <div className="hidden lg:block lg:col-span-2"></div>
         </div>
+
+        {/* --- BOTTOM CTA (High End) --- */}
+        <div className="max-w-4xl mx-auto px-6 mt-24">
+          <div className="bg-slate-900 rounded-3xl p-10 md:p-16 text-center relative overflow-hidden shadow-2xl">
+            {/* Decorative background blur */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#0ea5e9] opacity-20 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
+            
+            <h3 className="text-3xl md:text-4xl font-bold text-white mb-6 relative z-10">
+              Is your data truly secure?
+            </h3>
+            <p className="text-slate-300 text-lg mb-10 max-w-2xl mx-auto leading-relaxed relative z-10">
+              Join the leading Michigan enterprises that trust IT Asset Solutions for secure, compliant, and sustainable value recovery.
+            </p>
+            <div className="relative z-10 flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/contact" className="inline-flex items-center justify-center bg-[#0ea5e9] text-white font-bold px-8 py-4 rounded-xl hover:bg-[#0284c7] transition-all hover:scale-105">
+                Request Service
+              </Link>
+              <Link to="/services" className="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm text-white font-bold px-8 py-4 rounded-xl hover:bg-white/20 transition-all">
+                Explore Solutions
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* --- RELATED READS --- */}
+        {relatedPosts.length > 0 && (
+          <div className="max-w-7xl mx-auto px-6 mt-24 pt-12 border-t border-gray-200">
+            <h3 className="text-2xl font-bold text-slate-900 mb-8 tracking-tight">Relevant Intelligence</h3>
+            <div className="grid md:grid-cols-2 gap-8">
+              {relatedPosts.map(rp => (
+                <Link key={rp.slug} to={`/blog/${rp.slug}`} className="group flex gap-6 items-start">
+                  <div className="w-32 h-24 shrink-0 overflow-hidden rounded-lg bg-gray-100">
+                    <img src={rp.image} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+                  </div>
+                  <div>
+                    <span className="text-xs font-bold text-[#0ea5e9] uppercase mb-1 block">{rp.category}</span>
+                    <h4 className="text-lg font-bold text-slate-900 group-hover:text-[#0ea5e9] transition-colors leading-snug mb-2">
+                      {rp.title}
+                    </h4>
+                    <span className="text-sm text-slate-500 font-medium flex items-center">
+                      Read Analysis <ArrowRight className="w-3 h-3 ml-2" />
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
       </main>
       <ContactLocation />
     </>

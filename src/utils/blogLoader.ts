@@ -1,3 +1,5 @@
+// src/utils/blogLoader.ts
+
 export interface BlogPost {
   slug: string;
   title: string;
@@ -30,15 +32,15 @@ export async function getAllPosts(): Promise<BlogPost[]> {
       const frontmatter = frontmatterMatch ? frontmatterMatch[1] : '';
 
       // --- CRITICAL FIX 2: Multi-line Field Extractor ---
-      // This regex captures text even if it spans multiple lines or has colons inside it.
-      // It stops capturing only when it sees a new YAML key on a new line.
+      // This regex captures text even if it spans multiple lines.
+      // UPGRADE: Added '[-]' to the lookahead to handle keys like 'url-slug:' or 'seo-title:'
       const getField = (key: string) => {
-        const regex = new RegExp(`^${key}:\\s*(?:["']?)([\\s\\S]*?)(?:["']?)(?=\\n[a-z0-9_]+:|$)`, 'mi');
+        const regex = new RegExp(`^${key}:\\s*(?:["']?)([\\s\\S]*?)(?:["']?)(?=\\n[a-z0-9_\\-]+:|$)`, 'mi');
         const match = frontmatter.match(regex);
         
         if (!match) return '';
         
-        // Remove newlines and extra spaces from the captured value to make it clean text
+        // Remove newlines and extra spaces to create a clean text block
         return match[1].replace(/\n\s*/g, ' ').trim();
       };
 
@@ -52,7 +54,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
 
       // Slug Logic (Prioritize custom slug, fallback to filename)
       const filenameSlug = path.split('/').pop()?.replace('.md', '') || '';
-      const customSlug = getField('url_slug');
+      const customSlug = getField('url_slug'); // Matches 'url_slug' or 'url-slug' if you adjust regex, but keeping strictly your schema
 
       // --- CRITICAL FIX 3: Date Logic ---
       const rawDate = getField('date'); 
