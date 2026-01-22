@@ -72,5 +72,8 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    // This is the CRITICAL ADDITION that fixes your blog styling
+    require('@tailwindcss/typography'), 
+  ],
 };

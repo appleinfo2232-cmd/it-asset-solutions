@@ -6,7 +6,7 @@ import { getPostBySlug, getAllPosts, BlogPost as PostType } from '../utils/blogL
 import ContactLocation from '../components/ContactLocation';
 import { 
   ArrowLeft, Calendar, Clock, User, Share2, 
-  Linkedin, Twitter, Facebook, CheckCircle, ArrowRight 
+  Linkedin, Twitter, Facebook, CheckCircle, ArrowRight, Minus 
 } from 'lucide-react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 
@@ -116,25 +116,25 @@ const BlogPost: React.FC = () => {
           {/* Premium Author Byline */}
           <div className="flex items-center justify-center gap-6 text-sm border-y border-gray-100 py-6">
             <div className="flex items-center gap-3">
-               <div className="w-10 h-10 bg-slate-900 rounded-full flex items-center justify-center text-white">
+               <div className="w-10 h-10 bg-slate-900 rounded-full flex items-center justify-center text-white shadow-md">
                  <User className="w-5 h-5"/>
                </div>
                <div className="text-left">
                  <p className="font-bold text-slate-900 leading-none mb-1">{post.author}</p>
-                 <p className="text-slate-500 text-xs">Editorial Team</p>
+                 <p className="text-slate-500 text-xs uppercase tracking-wide">Editorial Team</p>
                </div>
             </div>
             <div className="h-8 w-px bg-gray-200 hidden sm:block"></div>
-            <div className="text-slate-500 font-medium flex gap-4">
-               <span className="flex items-center"><Calendar className="w-4 h-4 mr-2 text-slate-400" /> {post.displayDate}</span>
-               <span className="flex items-center"><Clock className="w-4 h-4 mr-2 text-slate-400" /> {post.readTime}</span>
+            <div className="text-slate-500 font-medium flex gap-6">
+               <span className="flex items-center"><Calendar className="w-4 h-4 mr-2 text-[#0ea5e9]" /> {post.displayDate}</span>
+               <span className="flex items-center"><Clock className="w-4 h-4 mr-2 text-[#0ea5e9]" /> {post.readTime}</span>
             </div>
           </div>
         </div>
 
         {/* --- FEATURED IMAGE (Wide) --- */}
         <div className="max-w-5xl mx-auto px-4 sm:px-6 mb-16">
-          <div className="rounded-2xl overflow-hidden shadow-2xl">
+          <div className="rounded-2xl overflow-hidden shadow-2xl ring-1 ring-slate-900/5">
             <img 
               src={post.image} 
               alt={post.imageAlt} 
@@ -146,40 +146,55 @@ const BlogPost: React.FC = () => {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12">
           
-          {/* --- LEFT SIDEBAR (Socials - Desktop) --- */}
-          <div className="hidden lg:block lg:col-span-2 sticky top-32 h-fit">
-            <div className="flex flex-col gap-4 items-center">
-               <p className="text-xs font-bold text-slate-400 uppercase mb-2">Share</p>
-               <button onClick={handleShare} className="p-3 rounded-full bg-slate-50 text-slate-600 hover:bg-[#0ea5e9] hover:text-white transition-all shadow-sm"><Share2 className="w-5 h-5" /></button>
-               <button className="p-3 rounded-full bg-slate-50 text-slate-600 hover:bg-[#0077b5] hover:text-white transition-all shadow-sm"><Linkedin className="w-5 h-5" /></button>
-               <button className="p-3 rounded-full bg-slate-50 text-slate-600 hover:bg-black hover:text-white transition-all shadow-sm"><Twitter className="w-5 h-5" /></button>
+          {/* --- LEFT SIDEBAR (Sticky Socials - Desktop) --- */}
+          <div className="hidden lg:block lg:col-span-2 relative">
+             <div className="sticky top-32 flex flex-col gap-4 items-center">
+               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 rotate-180 text-vertical-lr py-4">Share Article</p>
+               <button onClick={handleShare} className="p-3 rounded-full bg-white text-slate-600 border border-slate-100 hover:border-[#0ea5e9] hover:text-[#0ea5e9] transition-all shadow-sm"><Share2 className="w-5 h-5" /></button>
+               <button className="p-3 rounded-full bg-white text-slate-600 border border-slate-100 hover:border-[#0077b5] hover:text-[#0077b5] transition-all shadow-sm"><Linkedin className="w-5 h-5" /></button>
+               <button className="p-3 rounded-full bg-white text-slate-600 border border-slate-100 hover:border-black hover:text-black transition-all shadow-sm"><Twitter className="w-5 h-5" /></button>
             </div>
           </div>
 
           {/* --- MAIN CONTENT COLUMN --- */}
           <article className="lg:col-span-8">
             
-            {/* EXECUTIVE SUMMARY (Premium Look) */}
+            {/* EXECUTIVE SUMMARY (Magazine Style) */}
             {post.aiSummary && (
-              <div className="mb-12 bg-slate-50 border-l-4 border-[#0ea5e9] p-8 rounded-r-xl">
-                <h3 className="text-sm font-bold text-slate-900 uppercase tracking-widest mb-4 flex items-center">
+              <div className="mb-12 bg-slate-50 border-l-4 border-[#0ea5e9] p-8 rounded-r-xl shadow-sm">
+                <h3 className="text-xs font-bold text-slate-900 uppercase tracking-widest mb-4 flex items-center">
                   <CheckCircle className="w-4 h-4 mr-2 text-[#0ea5e9]" /> Executive Summary
                 </h3>
-                <p className="text-slate-800 text-lg md:text-xl font-medium leading-relaxed italic">
-                  {post.aiSummary}
+                <p className="text-slate-800 text-lg md:text-xl font-serif italic leading-relaxed">
+                  "{post.aiSummary}"
                 </p>
               </div>
             )}
 
-            {/* MARKDOWN CONTENT */}
-            <div className="prose prose-lg md:prose-xl max-w-none text-slate-700 
+            {/* MARKDOWN CONTENT - STYLED WITH PROSE */}
+            <div className="prose prose-lg md:prose-xl max-w-none text-slate-600 
               prose-headings:font-bold prose-headings:text-slate-900 prose-headings:tracking-tight 
-              prose-p:leading-8 prose-p:mb-6 
+              prose-p:leading-8 prose-p:mb-8 
               prose-a:text-[#0ea5e9] prose-a:font-bold prose-a:no-underline hover:prose-a:underline
-              prose-blockquote:border-l-4 prose-blockquote:border-slate-900 prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:text-slate-800
-              prose-img:rounded-xl prose-img:shadow-lg prose-img:my-10"
+              prose-strong:text-slate-900 prose-strong:font-extrabold
+              prose-blockquote:border-l-4 prose-blockquote:border-slate-900 prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:text-slate-800 prose-blockquote:bg-white
+              prose-img:rounded-xl prose-img:shadow-lg prose-img:my-12 prose-img:w-full
+              prose-li:marker:text-[#0ea5e9]"
             >
-               <ReactMarkdown>{post.body}</ReactMarkdown>
+               <ReactMarkdown 
+                 components={{
+                   // Custom Divider for '---' in markdown
+                   hr: () => <div className="flex items-center justify-center my-12"><div className="h-px bg-slate-200 w-full max-w-xs"></div><div className="mx-4 text-slate-300"><Minus className="w-4 h-4"/></div><div className="h-px bg-slate-200 w-full max-w-xs"></div></div>,
+                   // Custom Blockquote styling
+                   blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-[#0ea5e9] pl-6 italic text-slate-700 my-8 bg-slate-50 py-4 pr-4 rounded-r-lg" {...props} />,
+                   // Custom Link styling
+                   a: ({node, ...props}) => <a className="text-[#0ea5e9] font-bold no-underline hover:underline transition-all" {...props} />,
+                   // Custom Image styling
+                   img: ({node, ...props}) => <img className="rounded-xl shadow-lg my-10 w-full" loading="lazy" {...props} />
+                 }}
+               >
+                 {post.body}
+               </ReactMarkdown>
             </div>
 
             {/* MOBILE SHARE BAR */}
@@ -192,7 +207,7 @@ const BlogPost: React.FC = () => {
 
           </article>
 
-          {/* --- RIGHT SIDEBAR (Spacer / Future TOC) --- */}
+          {/* --- RIGHT SIDEBAR (Spacer) --- */}
           <div className="hidden lg:block lg:col-span-2"></div>
         </div>
 
@@ -209,10 +224,10 @@ const BlogPost: React.FC = () => {
               Join the leading Michigan enterprises that trust IT Asset Solutions for secure, compliant, and sustainable value recovery.
             </p>
             <div className="relative z-10 flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/contact" className="inline-flex items-center justify-center bg-[#0ea5e9] text-white font-bold px-8 py-4 rounded-xl hover:bg-[#0284c7] transition-all hover:scale-105">
+              <Link to="/contact" className="inline-flex items-center justify-center bg-[#0ea5e9] text-white font-bold px-8 py-4 rounded-xl hover:bg-[#0284c7] transition-all hover:scale-105 shadow-lg shadow-blue-500/30">
                 Request Service
               </Link>
-              <Link to="/services" className="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm text-white font-bold px-8 py-4 rounded-xl hover:bg-white/20 transition-all">
+              <Link to="/services" className="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm text-white font-bold px-8 py-4 rounded-xl hover:bg-white/20 transition-all border border-white/10">
                 Explore Solutions
               </Link>
             </div>
@@ -225,8 +240,8 @@ const BlogPost: React.FC = () => {
             <h3 className="text-2xl font-bold text-slate-900 mb-8 tracking-tight">Relevant Intelligence</h3>
             <div className="grid md:grid-cols-2 gap-8">
               {relatedPosts.map(rp => (
-                <Link key={rp.slug} to={`/blog/${rp.slug}`} className="group flex gap-6 items-start">
-                  <div className="w-32 h-24 shrink-0 overflow-hidden rounded-lg bg-gray-100">
+                <Link key={rp.slug} to={`/blog/${rp.slug}`} className="group flex gap-6 items-start hover:bg-slate-50 p-4 rounded-2xl transition-all">
+                  <div className="w-32 h-24 shrink-0 overflow-hidden rounded-lg bg-gray-100 shadow-sm">
                     <img src={rp.image} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
                   </div>
                   <div>
