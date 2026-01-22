@@ -113,7 +113,6 @@ const Footer: React.FC = () => {
       href: SOCIAL_LINKS?.facebook || 'https://facebook.com', 
       label: 'Facebook'
     },
-    // ✅ UPDATED: Used XIcon instead of default Twitter
     { 
       icon: XIcon, 
       href: SOCIAL_LINKS?.twitter || 'https://twitter.com/ITAssetSols', 
@@ -422,6 +421,7 @@ const Footer: React.FC = () => {
             <div className="flex items-center space-x-8">
               <Link to="/privacy-policy" className="text-slate-400 hover:text-white transition-colors" onClick={scrollToTop}>Privacy Policy</Link>
               <Link to="/terms-and-conditions" className="text-slate-400 hover:text-white transition-colors" onClick={scrollToTop}>Terms of Service</Link>
+              {/* CORRECT SITEMAP LINK */}
               <a href="/sitemap.xml" className="text-slate-400 hover:text-white transition-colors">Sitemap</a>
             </div>
           </div>
