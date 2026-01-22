@@ -1,273 +1,263 @@
 import React, { useEffect, useState, useMemo } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
-import { getAllPosts, BlogPost } from '../utils/blogLoader';
+import ReactMarkdown from 'react-markdown';
+import { getPostBySlug, getAllPosts, BlogPost as PostType } from '../utils/blogLoader';
 import ContactLocation from '../components/ContactLocation';
-import { Search, Clock, ArrowRight, Filter } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { 
+  ArrowLeft, Calendar, Clock, User, Share2, 
+  Linkedin, Twitter, Facebook, CheckCircle, ArrowRight, Minus 
+} from 'lucide-react';
+import { motion, useScroll, useSpring } from 'framer-motion';
 
-const BlogPage: React.FC = () => {
-  const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [activeCategory, setActiveCategory] = useState('All');
-  const [searchQuery, setSearchQuery] = useState('');
+const BlogPost: React.FC = () => {
+  const { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
+  const [post, setPost] = useState<PostType | null>(null);
+  const [relatedPosts, setRelatedPosts] = useState<PostType[]>([]);
+  
+  // Progress Bar Hook
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
-  // --- 1. DATA LOADING & SCHEDULING LOGIC ---
+  // --- 1. DATA LOADING ---
   useEffect(() => {
-    getAllPosts().then((data) => {
-      const now = new Date();
-      
-      // FIX: Filter out posts scheduled for the future
-      // We use post.date (ISO format) for accurate comparison
-      const publishedPosts = data.filter(post => {
-        const postDate = new Date(post.date);
-        return postDate <= now;
+    if (slug) {
+      getPostBySlug(slug).then((data) => {
+        const now = new Date();
+        // Security check
+        if (!data || new Date(data.date) > now) {
+          navigate('/blog');
+          return;
+        }
+        setPost(data);
+
+        // Load Related Posts
+        getAllPosts().then(allPosts => {
+          const others = allPosts
+            .filter(p => p.slug !== data.slug && p.category === data.category && new Date(p.date) <= now)
+            .slice(0, 2);
+          setRelatedPosts(others);
+        });
       });
-
-      // OPTIMIZATION: Sort by date descending (Newest First)
-      const sortedPosts = publishedPosts.sort((a, b) => 
-        new Date(b.date).getTime() - new Date(a.date).getTime()
-      );
-
-      setPosts(sortedPosts);
-    });
-
-    // 2026 SPEED: Use requestIdleCallback for non-critical scroll logic
-    if ('requestIdleCallback' in window) {
-      (window as any).requestIdleCallback(() => window.scrollTo(0, 0));
-    } else {
-      window.scrollTo(0, 0);
     }
-  }, []);
+    // Reset scroll to top smoothly
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [slug, navigate]);
 
-  // --- 2. PERFORMANCE: MEMOIZED FILTERING ---
-  const filteredPosts = useMemo(() => {
-    let result = posts;
-
-    if (activeCategory !== 'All') {
-      result = result.filter(post => post.category === activeCategory);
-    }
-
-    if (searchQuery) {
-      const lowerQuery = searchQuery.toLowerCase();
-      result = result.filter(post => 
-        post.title.toLowerCase().includes(lowerQuery) || 
-        post.metaDescription.toLowerCase().includes(lowerQuery)
-      );
-    }
-
-    return result;
-  }, [posts, activeCategory, searchQuery]);
-
-  // --- 3. SEO: DYNAMIC BLOG SCHEMA ---
-  const structuredData = useMemo(() => ({
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "headline": "The ITAD Journal & Industry Insights",
-    "description": "Strategic intelligence on data security, sustainability, and logistics for enterprise IT managers.",
-    "url": "https://www.itassetsolutions.com/blog",
-    "provider": {
-      "@type": "Organization",
-      "name": "IT Asset Solutions",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://www.itassetsolutions.com/it-asset-solutions-new-logo.avif"
+  // --- 2. SEO & SCHEMA ---
+  const schemaData = useMemo(() => {
+    if (!post) return null;
+    return {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": post.seoTitle || post.title,
+      "description": post.metaDescription,
+      "image": [`https://www.itassetsolutions.com${post.image}`],
+      "datePublished": new Date(post.date).toISOString(),
+      "author": { "@type": "Organization", "name": post.author },
+      "publisher": {
+         "@type": "Organization",
+         "name": "IT Asset Solutions",
+         "logo": { "@type": "ImageObject", "url": "https://www.itassetsolutions.com/it-asset-solutions-new-logo.avif" }
       }
-    },
-    "mainEntity": {
-      "@type": "ItemList",
-      "itemListElement": filteredPosts.map((post, index) => ({
-        "@type": "ListItem",
-        "position": index + 1,
-        "url": `https://www.itassetsolutions.com/blog/${post.slug}`,
-        "name": post.title
-      }))
-    }
-  }), [filteredPosts]);
+    };
+  }, [post]);
 
-  const categories = ['All', 'Enterprise ITAD', 'Data Security', 'ESG & Sustainability', 'Industry News', 'Guides & Checklists'];
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({ title: post?.title, url: window.location.href }).catch(console.error);
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert('Link copied to clipboard.');
+    }
+  };
+
+  if (!post) return <div className="min-h-screen flex items-center justify-center bg-gray-50">Loading briefing...</div>;
 
   return (
     <>
       <Helmet>
-        <title>Industry Insights & ITAD News | IT Asset Solutions</title>
-        <meta name="description" content="Expert insights on Enterprise ITAD, Data Destruction, and ESG reporting. Stay ahead of industry trends and regulatory updates." />
-        <link rel="canonical" href="https://www.itassetsolutions.com/blog" />
-        <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
+        <title>{post.seoTitle || post.title} | IT Asset Solutions</title>
+        <meta name="description" content={post.metaDescription} />
+        <link rel="canonical" href={`https://www.itassetsolutions.com/blog/${post.slug}`} />
+        {schemaData && <script type="application/ld+json">{JSON.stringify(schemaData)}</script>}
       </Helmet>
-      
-      <main className="pt-32 pb-24 bg-gray-50/30 min-h-screen">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      {/* READING PROGRESS BAR */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1.5 bg-[#0ea5e9] origin-left z-50"
+        style={{ scaleX }}
+      />
+
+      <main className="pt-32 pb-24 bg-white min-h-screen font-sans">
+        
+        {/* --- ARTICLE HEADER (Centered & Elegant) --- */}
+        <div className="max-w-3xl mx-auto px-6 lg:px-8 mb-12 text-center">
           
-          {/* --- HEADER --- */}
-          <div className="text-center mb-16 max-w-3xl mx-auto">
-            <span className="text-[#0ea5e9] font-bold tracking-widest uppercase text-xs mb-3 block">
-              Intelligence Briefing
+          <Link to="/blog" className="inline-flex items-center text-slate-500 hover:text-[#0ea5e9] mb-8 text-sm font-semibold tracking-wide uppercase transition-colors">
+            <ArrowLeft className="w-4 h-4 mr-2" /> Back to Intelligence
+          </Link>
+
+          <div className="mb-6 flex justify-center">
+            <span className="bg-slate-100 text-slate-700 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-slate-200">
+              {post.category}
             </span>
-            <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 mb-6 tracking-tight leading-tight">
-              The ITAD Journal
-            </h1>
-            <p className="text-xl text-slate-500 leading-relaxed">
-              Strategic intelligence on data security, circular economy, and logistics for the modern enterprise.
-            </p>
           </div>
 
-          {/* --- SEARCH & FILTER BAR --- */}
-          <div className="flex flex-col lg:flex-row justify-between items-center gap-6 mb-16 sticky top-24 z-30 bg-white/80 backdrop-blur-xl p-4 rounded-2xl border border-white shadow-lg shadow-slate-200/50">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 mb-8 leading-tight tracking-tight">
+            {post.title}
+          </h1>
+
+          {/* Premium Author Byline */}
+          <div className="flex items-center justify-center gap-6 text-sm border-y border-gray-100 py-6">
+            <div className="flex items-center gap-3">
+               <div className="w-10 h-10 bg-slate-900 rounded-full flex items-center justify-center text-white shadow-md">
+                 <User className="w-5 h-5"/>
+               </div>
+               <div className="text-left">
+                 <p className="font-bold text-slate-900 leading-none mb-1">{post.author}</p>
+                 <p className="text-slate-500 text-xs uppercase tracking-wide">Editorial Team</p>
+               </div>
+            </div>
+            <div className="h-8 w-px bg-gray-200 hidden sm:block"></div>
+            <div className="text-slate-500 font-medium flex gap-6">
+               <span className="flex items-center"><Calendar className="w-4 h-4 mr-2 text-[#0ea5e9]" /> {post.displayDate}</span>
+               <span className="flex items-center"><Clock className="w-4 h-4 mr-2 text-[#0ea5e9]" /> {post.readTime}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* --- FEATURED IMAGE (Wide & Immersive) --- */}
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 mb-16">
+          <div className="rounded-2xl overflow-hidden shadow-2xl ring-1 ring-slate-900/5">
+            <img 
+              src={post.image} 
+              alt={post.imageAlt} 
+              className="w-full h-auto object-cover max-h-[600px]"
+              loading="eager"
+            />
+          </div>
+        </div>
+
+        {/* --- MAIN CONTENT LAYOUT --- */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12">
+          
+          {/* --- LEFT SIDEBAR (Sticky Socials) --- */}
+          <div className="hidden lg:block lg:col-span-2 relative">
+             <div className="sticky top-32 flex flex-col gap-4 items-center">
+               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 rotate-180 text-vertical-lr py-4">Share Article</p>
+               <button onClick={handleShare} className="p-3 rounded-full bg-white text-slate-600 border border-slate-100 hover:border-[#0ea5e9] hover:text-[#0ea5e9] transition-all shadow-sm"><Share2 className="w-5 h-5" /></button>
+               <button className="p-3 rounded-full bg-white text-slate-600 border border-slate-100 hover:border-[#0077b5] hover:text-[#0077b5] transition-all shadow-sm"><Linkedin className="w-5 h-5" /></button>
+               <button className="p-3 rounded-full bg-white text-slate-600 border border-slate-100 hover:border-black hover:text-black transition-all shadow-sm"><Twitter className="w-5 h-5" /></button>
+            </div>
+          </div>
+
+          {/* --- READING COLUMN (Narrow & Focused) --- */}
+          <article className="lg:col-span-8">
             
-            {/* Category Pills */}
-            <div className="flex gap-2 overflow-x-auto w-full lg:w-auto pb-2 lg:pb-0 no-scrollbar items-center">
-              <Filter className="w-4 h-4 text-slate-400 mr-2 flex-shrink-0" />
-              {categories.map(cat => (
-                <button
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all border ${
-                    activeCategory === cat 
-                    ? 'bg-slate-900 text-white border-slate-900' 
-                    : 'bg-white text-slate-500 border-slate-200 hover:border-[#0ea5e9] hover:text-[#0ea5e9]'
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
+            {/* EXECUTIVE SUMMARY (Magazine Style) */}
+            {post.aiSummary && (
+              <div className="mb-12 bg-slate-50 border-l-4 border-[#0ea5e9] p-8 rounded-r-xl shadow-sm">
+                <h3 className="text-xs font-bold text-slate-900 uppercase tracking-widest mb-4 flex items-center">
+                  <CheckCircle className="w-4 h-4 mr-2 text-[#0ea5e9]" /> Executive Summary
+                </h3>
+                <p className="text-slate-800 text-lg md:text-xl font-serif italic leading-relaxed">
+                  "{post.aiSummary}"
+                </p>
+              </div>
+            )}
+
+            {/* MARKDOWN CONTENT - STYLED WITH PROSE */}
+            <div className="prose prose-lg md:prose-xl max-w-none text-slate-600 
+              prose-headings:font-bold prose-headings:text-slate-900 prose-headings:tracking-tight 
+              prose-p:leading-8 prose-p:mb-8 
+              prose-a:text-[#0ea5e9] prose-a:font-bold prose-a:no-underline hover:prose-a:underline
+              prose-strong:text-slate-900 prose-strong:font-extrabold
+              prose-blockquote:border-l-4 prose-blockquote:border-slate-900 prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:text-slate-800 prose-blockquote:bg-white
+              prose-img:rounded-xl prose-img:shadow-lg prose-img:my-12 prose-img:w-full
+              prose-li:marker:text-[#0ea5e9]"
+            >
+               <ReactMarkdown 
+                 components={{
+                   // Custom Divider for '---' in markdown
+                   hr: () => <div className="flex items-center justify-center my-12"><div className="h-px bg-slate-200 w-full max-w-xs"></div><div className="mx-4 text-slate-300"><Minus /></div><div className="h-px bg-slate-200 w-full max-w-xs"></div></div>
+                 }}
+               >
+                 {post.body}
+               </ReactMarkdown>
             </div>
 
-            {/* Search Input */}
-            <div className="relative w-full lg:w-80">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-              <input
-                type="text"
-                placeholder="Search intelligence..."
-                className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-[#0ea5e9] focus:border-transparent outline-none transition-all placeholder:text-slate-400"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
+            {/* MOBILE SHARE BAR */}
+            <div className="mt-12 lg:hidden flex items-center justify-between border-t border-gray-100 pt-8">
+               <span className="font-bold text-slate-900">Share this insight:</span>
+               <div className="flex gap-2">
+                 <button onClick={handleShare} className="p-2 bg-slate-100 rounded-full"><Share2 className="w-5 h-5" /></button>
+               </div>
+            </div>
+
+          </article>
+
+          {/* --- RIGHT SIDEBAR (Spacer) --- */}
+          <div className="hidden lg:block lg:col-span-2"></div>
+        </div>
+
+        {/* --- BOTTOM CTA (High End) --- */}
+        <div className="max-w-4xl mx-auto px-6 mt-24">
+          <div className="bg-slate-900 rounded-3xl p-10 md:p-16 text-center relative overflow-hidden shadow-2xl">
+            {/* Decorative background blur */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#0ea5e9] opacity-20 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
+            
+            <h3 className="text-3xl md:text-4xl font-bold text-white mb-6 relative z-10">
+              Is your data truly secure?
+            </h3>
+            <p className="text-slate-300 text-lg mb-10 max-w-2xl mx-auto leading-relaxed relative z-10">
+              Join the leading Michigan enterprises that trust IT Asset Solutions for secure, compliant, and sustainable value recovery.
+            </p>
+            <div className="relative z-10 flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/contact" className="inline-flex items-center justify-center bg-[#0ea5e9] text-white font-bold px-8 py-4 rounded-xl hover:bg-[#0284c7] transition-all hover:scale-105 shadow-lg shadow-blue-500/30">
+                Request Service
+              </Link>
+              <Link to="/services" className="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm text-white font-bold px-8 py-4 rounded-xl hover:bg-white/20 transition-all border border-white/10">
+                Explore Solutions
+              </Link>
             </div>
           </div>
+        </div>
 
-          {/* --- FEATURED POST (Magazine Layout) --- */}
-          {filteredPosts.length > 0 && searchQuery === '' && activeCategory === 'All' && (
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mb-20"
-            >
-              <Link to={`/blog/${filteredPosts[0].slug}`} className="group relative block rounded-3xl overflow-hidden shadow-2xl">
-                <div className="grid lg:grid-cols-2 min-h-[500px]">
-                  {/* Image Side */}
-                  <div className="relative overflow-hidden h-64 lg:h-auto">
-                    <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-transparent transition-colors z-10"></div>
-                    <img 
-                      src={filteredPosts[0].image} 
-                      alt={filteredPosts[0].title}
-                      loading="eager" 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
+        {/* --- RELATED READS --- */}
+        {relatedPosts.length > 0 && (
+          <div className="max-w-7xl mx-auto px-6 mt-24 pt-12 border-t border-gray-200">
+            <h3 className="text-2xl font-bold text-slate-900 mb-8 tracking-tight">Relevant Intelligence</h3>
+            <div className="grid md:grid-cols-2 gap-8">
+              {relatedPosts.map(rp => (
+                <Link key={rp.slug} to={`/blog/${rp.slug}`} className="group flex gap-6 items-start hover:bg-slate-50 p-4 rounded-2xl transition-all">
+                  <div className="w-32 h-24 shrink-0 overflow-hidden rounded-lg bg-gray-100 shadow-sm">
+                    <img src={rp.image} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
                   </div>
-                  
-                  {/* Content Side */}
-                  <div className="bg-slate-900 p-8 md:p-12 lg:p-16 flex flex-col justify-center text-white relative overflow-hidden">
-                    {/* Decorative Blur */}
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-[#0ea5e9] opacity-20 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
-
-                    <div className="relative z-10">
-                      <div className="flex items-center gap-3 mb-6">
-                        <span className="bg-[#0ea5e9] text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">
-                          Featured Insight
-                        </span>
-                        <span className="text-slate-400 text-xs font-bold uppercase tracking-wider">
-                          {filteredPosts[0].category}
-                        </span>
-                      </div>
-                      
-                      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight group-hover:text-[#0ea5e9] transition-colors">
-                        {filteredPosts[0].title}
-                      </h2>
-                      
-                      <p className="text-slate-300 text-lg mb-8 line-clamp-3 leading-relaxed max-w-xl">
-                        {filteredPosts[0].metaDescription}
-                      </p>
-                      
-                      <div className="flex items-center text-sm font-bold mt-auto group-hover:translate-x-2 transition-transform">
-                        Read Full Briefing <ArrowRight className="w-4 h-4 ml-2" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
-          )}
-
-          {/* --- STANDARD GRID (3 Columns) --- */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {(searchQuery === '' && activeCategory === 'All' ? filteredPosts.slice(1) : filteredPosts).map((post, index) => (
-              <motion.div
-                key={post.slug}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
-              >
-                <Link to={`/blog/${post.slug}`} className="group flex flex-col h-full bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                  
-                  {/* Image Area */}
-                  <div className="h-56 overflow-hidden relative border-b border-gray-50">
-                    <img 
-                      src={post.image} 
-                      alt={post.title}
-                      loading="lazy"
-                      width="400" 
-                      height="225"
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute top-4 left-4 bg-white/95 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold text-slate-900 uppercase tracking-wide shadow-sm">
-                      {post.category}
-                    </div>
-                  </div>
-
-                  {/* Text Area */}
-                  <div className="p-8 flex flex-col flex-grow">
-                    <div className="flex items-center gap-3 text-xs text-slate-400 mb-4 font-bold tracking-wide uppercase">
-                      <span>{post.displayDate}</span>
-                      <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
-                      <span className="flex items-center"><Clock className="w-3 h-3 mr-1" /> {post.readTime}</span>
-                    </div>
-                    
-                    <h3 className="text-xl font-bold text-slate-900 mb-4 group-hover:text-[#0ea5e9] transition-colors leading-snug">
-                      {post.title}
-                    </h3>
-                    
-                    <p className="text-slate-500 text-sm leading-relaxed line-clamp-3 mb-6 flex-grow">
-                      {post.metaDescription}
-                    </p>
-                    
-                    <div className="flex items-center text-[#0ea5e9] font-bold text-sm mt-auto group-hover:underline decoration-2 underline-offset-4">
-                      Read Analysis
-                    </div>
+                  <div>
+                    <span className="text-xs font-bold text-[#0ea5e9] uppercase mb-1 block">{rp.category}</span>
+                    <h4 className="text-lg font-bold text-slate-900 group-hover:text-[#0ea5e9] transition-colors leading-snug mb-2">
+                      {rp.title}
+                    </h4>
+                    <span className="text-sm text-slate-500 font-medium flex items-center">
+                      Read Analysis <ArrowRight className="w-3 h-3 ml-2" />
+                    </span>
                   </div>
                 </Link>
-              </motion.div>
-            ))}
-          </div>
-          
-          {/* Empty State */}
-          {filteredPosts.length === 0 && (
-            <div className="text-center py-32 bg-white rounded-3xl border border-dashed border-gray-200">
-              <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Search className="w-8 h-8 text-gray-300" />
-              </div>
-              <p className="text-xl text-slate-900 font-bold mb-2">No articles found.</p>
-              <p className="text-slate-500 mb-6">Try adjusting your search or category filters.</p>
-              <button onClick={() => {setSearchQuery(''); setActiveCategory('All')}} className="text-[#0ea5e9] font-bold hover:underline">
-                Clear all filters
-              </button>
+              ))}
             </div>
-          )}
+          </div>
+        )}
 
-        </div>
       </main>
       <ContactLocation />
     </>
   );
 };
 
-export default BlogPage;
+export default BlogPost;
