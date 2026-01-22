@@ -1,115 +1,137 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  
+
   <url>
-    <loc>https://www.itassetsolutions.com/</loc>
-    <lastmod>2026-01-20</lastmod>
+    <loc>https://www.itassetsolutions.com</loc>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.itassetsolutions.com/about</loc>
-    <lastmod>2026-01-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.itassetsolutions.com/contact</loc>
-    <lastmod>2026-01-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://www.itassetsolutions.com/culture</loc>
-    <lastmod>2026-01-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.itassetsolutions.com/sustainability</loc>
-    <lastmod>2026-01-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.itassetsolutions.com/social-impact</loc>
-    <lastmod>2026-01-20</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.itassetsolutions.com/services</loc>
-    <lastmod>2026-01-20</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.itassetsolutions.com/services/enterprise-itad</loc>
-    <lastmod>2026-01-20</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.itassetsolutions.com/services/corporate-it-buyback</loc>
-    <lastmod>2026-01-20</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.itassetsolutions.com/services/secure-data-destruction</loc>
-    <lastmod>2026-01-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.itassetsolutions.com/services/it-asset-value-recovery</loc>
-    <lastmod>2026-01-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.itassetsolutions.com/services/auditing-compliance-reporting</loc>
-    <lastmod>2026-01-20</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.itassetsolutions.com/services/secure-chain-of-custody-logistics</loc>
-    <lastmod>2026-01-20</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>https://www.itassetsolutions.com/wholesale-it-equipment</loc>
-    <lastmod>2026-01-20</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.itassetsolutions.com/blog</loc>
-    <lastmod>2026-01-20</lastmod>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.itassetsolutions.com/culture</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.itassetsolutions.com/sustainability</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.itassetsolutions.com/social-impact</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.itassetsolutions.com/terms-and-conditions</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.itassetsolutions.com/privacy-policy</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.itassetsolutions.com/cookie-policy</loc>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://www.itassetsolutions.com/terms-and-conditions</loc>
-    <lastmod>2026-01-20</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://www.itassetsolutions.com/blog/windows-10-end-of-life-itad-guide</loc>
+    <lastmod>2025-12-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.itassetsolutions.com/privacy-policy</loc>
-    <lastmod>2026-01-20</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://www.itassetsolutions.com/blog/recycle-electronics-farmington-hills-drop-off</loc>
+    <lastmod>2025-12-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.itassetsolutions.com/cookie-policy</loc>
+    <loc>https://www.itassetsolutions.com/blog/scaling-business-wholesale-it-equipment-michigan</loc>
     <lastmod>2026-01-20</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.itassetsolutions.com/blog/risk-of-invisible-data-destruction-michigan</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>
