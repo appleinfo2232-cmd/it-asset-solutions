@@ -1,7 +1,7 @@
 ---
 title: "The Risk of “Invisible” Data: Why Software Wiping Isn’t Enough for
   Michigan Enterprises"
-date: 2026-01-22T21:29:00.000+05:30
+date: 2026-01-22T18:54:00.000+05:30
 category: Data Security
 image: /images/uploads/screenshot-2026-01-20-at-9.34.18-pm.png
 image_alt: An industrial hard drive shredder at a Farmington Hills facility
