@@ -42,7 +42,7 @@ const AboutPage: React.FC = () => {
     "foundingDate": "2020",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "23985 Industrial Park Dr", // UPDATED: Exact Address
+      "streetAddress": "23985 Industrial Park Dr",
       "addressLocality": "Farmington Hills",
       "addressRegion": "MI",
       "postalCode": "48335",
@@ -57,9 +57,9 @@ const AboutPage: React.FC = () => {
     },
     "sameAs": [
       "https://www.linkedin.com/company/it-asset-solutions",
-      "https://www.facebook.com/people/It-Asset-Solutions/100083165808782/", // ADDED: Facebook
+      "https://www.facebook.com/people/It-Asset-Solutions/100083165808782/",
       "https://www.crunchbase.com/organization/it-asset-solutions",
-      "https://twitter.com/ITAssetSols" // UPDATED: Correct Handle
+      "https://twitter.com/ITAssetSols"
     ],
     "knowsAbout": [
       { "@type": "Thing", "name": "IT Asset Disposition", "sameAs": "https://www.wikidata.org/wiki/Q1655079" },
@@ -80,17 +80,22 @@ const AboutPage: React.FC = () => {
 
       <main className="w-full overflow-x-hidden bg-white">
         
-        {/* --- HERO SECTION --- */}
+        {/* --- HERO SECTION (UPDATED BACKGROUND) --- */}
         <section className="relative pt-32 pb-20 bg-[#0f172a] text-white overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-[#0f172a] to-indigo-950 opacity-90"></div>
+          {/* Layer 1: Base Gradient */}
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-[#0f172a] to-indigo-950 opacity-90 z-0"></div>
           
-          {/* UPDATED: High-Quality Background Image Overlay */}
+          {/* Layer 2: Real-Time Database Server Image Overlay */}
           <div 
-            className="absolute inset-0 opacity-20 bg-cover bg-center mix-blend-overlay"
-            style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=2000")' }} 
+            className="absolute inset-0 opacity-40 bg-cover bg-center mix-blend-overlay z-0"
+            style={{ 
+              // Updated to a high-tech, glowing server room image
+              backgroundImage: `url("https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=2000")` 
+            }} 
           ></div>
           
-          <div className="absolute inset-0 opacity-10 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+          {/* Layer 3: Noise Texture */}
+          <div className="absolute inset-0 opacity-10 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] z-0"></div>
           
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
