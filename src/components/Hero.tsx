@@ -77,9 +77,9 @@ const ORBIT_NODES = [
 /* ================= NEW COMPONENT: SMART TECH GRID ================= */
 const SmartGridBackground = () => {
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
+    <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-10">
       
-      {/* 1. Base Fine Grid - Very subtle */}
+      {/* 1. Base Fine Grid - Static & Subtle */}
       <div 
         className="absolute inset-0 h-full w-full"
         style={{
@@ -92,7 +92,7 @@ const SmartGridBackground = () => {
         }}
       />
 
-      {/* 2. Structural Major Grid - Slightly more visible */}
+      {/* 2. Structural Major Grid - Static */}
       <div 
         className="absolute inset-0 h-full w-full"
         style={{
@@ -103,25 +103,6 @@ const SmartGridBackground = () => {
           backgroundSize: '120px 120px',
           maskImage: 'radial-gradient(ellipse 60% 50% at 50% 0%, #000 70%, transparent 100%)'
         }}
-      />
-
-      {/* 3. Horizontal Scan Line Animation */}
-      <motion.div
-        className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent"
-        initial={{ top: -100, opacity: 0 }}
-        animate={{ top: ['0%', '100%'], opacity: [0, 1, 0] }}
-        transition={{
-          duration: 8,
-          ease: "linear",
-          repeat: Infinity,
-          repeatDelay: 2
-        }}
-        style={{ boxShadow: '0 0 10px rgba(34, 211, 238, 0.2)' }}
-      />
-      
-      {/* 4. Perspective Floor Grid (Optional 3D feel at bottom) */}
-      <div 
-        className="absolute bottom-0 inset-x-0 h-64 bg-gradient-to-t from-[#020617] to-transparent z-10" 
       />
     </div>
   );
@@ -210,10 +191,6 @@ const Hero: React.FC<{ userRole?: string }> = ({ userRole }) => {
           width: 100%;
           background-color: #020617;
         }
-        @keyframes scan {
-          0% { background-position: 0% 0%; }
-          100% { background-position: 100% 100%; }
-        }
       `}</style>
 
       {/* HERO SECTION */}
@@ -222,14 +199,14 @@ const Hero: React.FC<{ userRole?: string }> = ({ userRole }) => {
         {/* === LAYER 1: GLOBAL NOISE === */}
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.04] pointer-events-none z-0" />
 
-        {/* === LAYER 2: SMART TECH GRID (NEW) === */}
+        {/* === LAYER 2: SMART TECH GRID (Static) === */}
         <SmartGridBackground />
 
         {/* === LAYER 3: GLOW BLOBS === */}
-        <div className="absolute top-0 right-0 w-[40vw] h-[40vh] bg-blue-500/10 rounded-full blur-[100px] pointer-events-none translate-x-1/2 -translate-y-1/2" />
-        <div className="absolute bottom-0 left-0 w-[40vw] h-[40vh] bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none -translate-x-1/2 translate-y-1/2" />
+        <div className="absolute top-0 right-0 w-[40vw] h-[40vh] bg-blue-500/10 rounded-full blur-[100px] pointer-events-none translate-x-1/2 -translate-y-1/2 z-0" />
+        <div className="absolute bottom-0 left-0 w-[40vw] h-[40vh] bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none -translate-x-1/2 translate-y-1/2 z-0" />
 
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
           {/* LEFT CONTENT */}
           <motion.div 
@@ -250,11 +227,11 @@ const Hero: React.FC<{ userRole?: string }> = ({ userRole }) => {
               </div>
             </motion.div>
 
-            <motion.h1 variants={fadeInUp} className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-[1.1] mb-6 tracking-tight">
+            <motion.h1 variants={fadeInUp} className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-[1.1] mb-6 tracking-tight drop-shadow-lg">
               {content.headline}
             </motion.h1>
 
-            <motion.p variants={fadeInUp} className="text-base sm:text-lg text-slate-400 mb-8 leading-relaxed max-w-lg mx-auto lg:mx-0 border-t lg:border-t-0 lg:border-l border-slate-800 lg:border-slate-700 pt-6 lg:pt-0 lg:pl-6">
+            <motion.p variants={fadeInUp} className="text-base sm:text-lg text-slate-400 mb-8 leading-relaxed max-w-lg mx-auto lg:mx-0 border-t lg:border-t-0 lg:border-l border-slate-800 lg:border-slate-700 pt-6 lg:pt-0 lg:pl-6 bg-gradient-to-r from-transparent via-[#020617]/50 to-transparent lg:bg-none">
               {content.sub}
             </motion.p>
 
@@ -262,7 +239,7 @@ const Hero: React.FC<{ userRole?: string }> = ({ userRole }) => {
               {ORBIT_NODES.slice(0, 4).map((node) => {
                 const Icon = node.icon;
                 return (
-                  <div key={node.id} className="bg-slate-900/50 border border-slate-800 rounded-lg p-3 flex flex-col items-center gap-2">
+                  <div key={node.id} className="bg-slate-900/50 border border-slate-800 rounded-lg p-3 flex flex-col items-center gap-2 backdrop-blur-sm">
                     <Icon className={`w-5 h-5 ${node.isPrimary ? 'text-emerald-400' : 'text-slate-400'}`} />
                     <span className="text-xs font-semibold text-slate-300">{node.title}</span>
                   </div>
@@ -278,7 +255,6 @@ const Hero: React.FC<{ userRole?: string }> = ({ userRole }) => {
                 onClick={() => scrollToSection('contact')}
                 className="w-full sm:w-auto flex-shrink-0 relative px-8 py-4 rounded-xl font-bold text-white shadow-xl shadow-blue-600/20 hover:scale-[1.02] hover:shadow-blue-600/30 transition-all duration-300 group overflow-hidden bg-blue-600 whitespace-nowrap"
               >
-                <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none" />
                 <span className="relative z-10 flex items-center gap-2 justify-center">
                   Sell Your IT Equipment
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -298,15 +274,15 @@ const Hero: React.FC<{ userRole?: string }> = ({ userRole }) => {
             <motion.div variants={fadeInUp} className="mt-12 pt-8 border-t border-slate-800/50 flex flex-wrap justify-center lg:justify-start items-center gap-x-8 gap-y-4 text-slate-500 text-xs font-bold uppercase tracking-wider">
               <div className="flex items-center gap-2.5 group cursor-help" title="NIST 800-88 Compliant">
                 <div className="p-1.5 bg-cyan-500/10 rounded-md group-hover:bg-cyan-500/20 transition-colors"><ShieldCheck className="w-4 h-4 text-cyan-500" /></div>
-                <span>Secure Wipe</span>
+                <span className="group-hover:text-slate-300 transition-colors">Secure Wipe</span>
               </div>
               <div className="flex items-center gap-2.5 group cursor-help" title="EPA Compliant">
                 <div className="p-1.5 bg-emerald-500/10 rounded-md group-hover:bg-emerald-500/20 transition-colors"><Layers className="w-4 h-4 text-emerald-500" /></div>
-                <span>Green Standards</span>
+                <span className="group-hover:text-slate-300 transition-colors">Green Standards</span>
               </div>
               <div className="flex items-center gap-2.5 group cursor-help" title="R2v3 Practices">
                 <div className="p-1.5 bg-blue-500/10 rounded-md group-hover:bg-blue-500/20 transition-colors"><RefreshCw className="w-4 h-4 text-blue-500" /></div>
-                <span>Zero Landfill</span>
+                <span className="group-hover:text-slate-300 transition-colors">Zero Landfill</span>
               </div>
             </motion.div>
           </motion.div>
@@ -337,18 +313,31 @@ const Hero: React.FC<{ userRole?: string }> = ({ userRole }) => {
             </div>
 
             <div className="absolute inset-0 w-full h-full pointer-events-none">
-              {ORBIT_NODES.map((node) => {
+              {ORBIT_NODES.map((node, i) => {
                 const Icon = node.icon; 
                 return (
                   <div key={node.id} className={`absolute ${node.position} z-20 pointer-events-auto`}>
                     <motion.div 
                       initial={{ opacity: 0, scale: 0.5 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: node.delay, duration: 0.5, type: "spring" }}
+                      animate={{ 
+                        opacity: 1, 
+                        scale: 1,
+                        y: [0, -10, 0] // Floating animation
+                      }}
+                      transition={{ 
+                        delay: node.delay, 
+                        duration: 0.5, 
+                        type: "spring",
+                        y: {
+                            repeat: Infinity,
+                            duration: 3 + i, 
+                            ease: "easeInOut"
+                        }
+                      }}
                       className={`
-                        relative p-4 rounded-2xl flex items-center gap-3 min-w-[200px] backdrop-blur-md cursor-pointer transition-all duration-300 hover:scale-105 hover:-translate-y-1
-                        bg-slate-900/60 border border-white/5 shadow-lg
-                        ${node.isPrimary ? 'border-emerald-500/30 bg-slate-900/90' : 'hover:border-slate-600'}
+                        relative p-4 rounded-2xl flex items-center gap-3 min-w-[200px] backdrop-blur-md cursor-pointer transition-all duration-300 hover:scale-105
+                        bg-slate-900/80 border border-white/10 shadow-lg
+                        ${node.isPrimary ? 'border-emerald-500/30 bg-slate-900/95' : 'hover:border-slate-600'}
                       `}
                     >
                       <div className={`w-10 h-10 rounded-xl flex items-center justify-center border border-white/5 ${node.styles}`}>
