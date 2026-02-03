@@ -145,14 +145,14 @@ const ContactPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        {/* HYBRID TITLE: Hits both "Quote" (B2B) and "Drop Off" (Local) */}
-        <title>Contact IT Asset Solutions | Business ITAD Quotes & Public Drop-Off</title>
+        {/* UPDATED: Brand Name + Competitor Defense + Local Service */}
+        <title>Contact IT Asset Solutions | Enterprise ITAD & Recycling Michigan</title>
         
-        {/* DESCRIPTION: Updated "compliant"/"adherent" -> "aligned" */}
-        <meta name="description" content="Contact us for a Corporate ITAD Quote or visit our Farmington Hills facility for Residential Electronics Recycling. Secure, EPA-aligned, and local." />
+        {/* UPDATED: Singular keyword "IT asset solution" included naturally */}
+        <meta name="description" content="Looking for the best IT asset solution? Contact IT Asset Solutions for corporate buyback quotes or visit our Farmington Hills recycling center." />
         
-        {/* KEYWORDS: Mixing high-value B2B with local B2C */}
-        <meta name="keywords" content="ITAD Quote Michigan, Business Computer Disposal, Residential Electronics Drop Off, Farmington Hills Recycling Center, Contact IT Asset Solutions" />
+        {/* KEYWORDS: Added variations of your name and competitor's name */}
+        <meta name="keywords" content="Contact IT Asset Solutions, IT Asset Solution, ITAD Quote Michigan, Business Computer Disposal, Residential Electronics Drop Off, Farmington Hills Recycling Center" />
         
         {/* 2026 SPEED: Preconnect to Maps API to speed up ContactLocation loading */}
         <link rel="preconnect" href="https://maps.googleapis.com" />
@@ -161,7 +161,7 @@ const ContactPage: React.FC = () => {
         <link rel="canonical" href="https://www.itassetsolutions.com/contact" />
 
         {/* OPEN GRAPH */}
-        <meta property="og:title" content="Contact IT Asset Solutions | Quotes & Recycling Info" />
+        <meta property="og:title" content="Contact IT Asset Solutions | Enterprise ITAD & Recycling" />
         <meta property="og:description" content="Get a free assessment for corporate IT assets or find drop-off hours for personal electronics." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.itassetsolutions.com/contact" />
