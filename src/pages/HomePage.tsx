@@ -76,20 +76,22 @@ const HomePage: React.FC = () => {
   return (
     <div className="relative min-h-screen bg-slate-50">
       <Helmet>
-        <title>Enterprise ITAD & Data Destruction Michigan | NIST 800-88 Aligned</title>
+        {/* --- SEO UPDATE: BRANDING & COMPETITOR DEFENSE --- */}
+        {/* Added Brand Name first to claim authority */}
+        <title>IT Asset Solutions | Enterprise ITAD & Data Destruction Michigan</title>
         
-        <meta name="description" content="Secure IT Asset Disposition (ITAD) and data destruction services in Michigan. We adhere to NIST 800-88 standards, providing full liability transfer, serialized auditing, and value recovery for enterprise electronics." />
+        {/* Added "The complete IT asset solution" (singular) to match competitor searches */}
+        <meta name="description" content="The complete IT asset solution for Michigan businesses. Secure IT Asset Disposition (ITAD), data destruction, and value recovery with NIST 800-88 compliance." />
         
-        {/* Removed "R2 Guidelines" to avoid misinterpretation of certification status */}
-        <meta name="keywords" content="Enterprise ITAD, Secure Data Destruction, Corporate Laptop Recycling, IT Asset Disposition, ESG Reporting, Data Center Decommissioning, Liability Transfer" />
+        {/* Targeted keywords including singular/plural variations */}
+        <meta name="keywords" content="IT Asset Solution, IT Asset Solutions, Enterprise ITAD, Secure Data Destruction, Corporate Laptop Recycling, Data Center Decommissioning, Liability Transfer" />
 
         {/* 2026 SPEED UPDATE: Preload the Hero AVIF image for fast LCP scores */}
-        {/* Updated to point to the correct file path you provided earlier */}
         <link rel="preload" as="image" href="https://www.itassetsolutions.com/it-asset-solutions-new-logo.avif" />
 
         <meta property="og:type" content="business.business" />
-        <meta property="og:title" content="IT Asset Solutions | Secure Enterprise ITAD Partner" />
-        <meta property="og:description" content="Transforming retired corporate technology into strategic value. 100% Audit Success Rate with full liability protection." />
+        <meta property="og:title" content="IT Asset Solutions | Enterprise ITAD & Data Destruction Michigan" />
+        <meta property="og:description" content="The complete IT asset solution for Michigan businesses. 100% Audit Success Rate with full liability protection." />
         <meta property="og:url" content="https://www.itassetsolutions.com/" />
         {/* AVIF Image Reference */}
         <meta property="og:image" content="https://www.itassetsolutions.com/it-asset-solutions-new-logo.avif" />
@@ -98,7 +100,7 @@ const HomePage: React.FC = () => {
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="IT Asset Solutions | Enterprise ITAD Services" />
-        <meta name="twitter:description" content="Michigan's trusted ITAD partner. Secure, Audited, Profitable." />
+        <meta name="twitter:description" content="Michigan's trusted IT asset solution. Secure, Audited, Profitable." />
         <meta name="twitter:image" content="https://www.itassetsolutions.com/it-asset-solutions-new-logo.avif" />
 
         <meta name="robots" content="index, follow, max-image-preview:large" />
