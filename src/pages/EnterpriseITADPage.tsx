@@ -90,9 +90,15 @@ const EnterpriseITADPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Enterprise ITAD & Remote Workforce Logistics | Secure & Nationwide</title>
-        <meta name="description" content="Turnkey IT asset disposition for distributed enterprises. We handle remote laptop retrieval, data center cleanouts, and secure recycling with full ESG reporting." />
-        <meta name="keywords" content="Enterprise ITAD, Remote Workforce Logistics, Data Center Decommissioning, Corporate Laptop Recycling, ESG Reporting, NIST 800-88" />
+        {/* UPDATED: Brand Name First + Keyword Targeting */}
+        <title>IT Asset Solutions | Enterprise ITAD & Remote Logistics</title>
+        
+        {/* UPDATED: Injected "complete enterprise IT asset solution" (singular) for competitor defense */}
+        <meta name="description" content="The complete enterprise IT asset solution for distributed teams. We handle remote laptop retrieval, data center decommissioning, and secure recycling with NIST 800-88 compliance." />
+        
+        {/* UPDATED: Added Brand Name & Singular/Plural Keywords */}
+        <meta name="keywords" content="IT Asset Solutions, IT Asset Solution, Enterprise ITAD, Remote Workforce Logistics, Data Center Decommissioning, Corporate Laptop Recycling, ESG Reporting" />
+        
         <link rel="canonical" href="https://www.itassetsolutions.com/services/enterprise-itad" />
         {/* 2026 SPEED: Preconnect to Maps API */}
         <link rel="preconnect" href="https://maps.googleapis.com" />

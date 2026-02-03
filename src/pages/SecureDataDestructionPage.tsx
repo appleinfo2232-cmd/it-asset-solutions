@@ -93,10 +93,15 @@ const SecureDataDestructionPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Secure Data Destruction | Hard Drive Shredding & NIST Wiping</title>
-        <meta name="description" content="Audit-proof your IT disposal. We provide on-site hard drive shredding and NIST 800-88 data wiping with serialized Certificates of Destruction. Serving MI & USA." />
-        {/* UPDATED: "Compliant" -> "Aligned" */}
-        <meta name="keywords" content="hard drive shredding, NIST 800-88, data destruction certificate, on-site shredding Michigan, secure media destruction, HIPAA aligned disposal" />
+        {/* UPDATED: Brand Name First + "Secure Data Destruction" Keyword */}
+        <title>IT Asset Solutions | Secure Data Destruction & Shredding</title>
+        
+        {/* UPDATED: Injected "IT asset solution" (singular) + "NIST 800-88" */}
+        <meta name="description" content="The secure IT asset solution for data destruction. On-site hard drive shredding and NIST 800-88 wiping with serialized Certificates of Destruction." />
+        
+        {/* UPDATED: Added Brand Name & Competitor Variations */}
+        <meta name="keywords" content="IT Asset Solutions, IT Asset Solution, hard drive shredding, NIST 800-88, data destruction certificate, on-site shredding Michigan, secure media destruction" />
+        
         <link rel="canonical" href="https://www.itassetsolutions.com/services/secure-data-destruction" />
         {/* 2026 SPEED: Preconnect to Maps API */}
         <link rel="preconnect" href="https://maps.googleapis.com" />

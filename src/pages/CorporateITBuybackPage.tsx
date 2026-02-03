@@ -89,9 +89,15 @@ const CorporateITBuybackPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Sell IT Equipment | Corporate Buyback for Laptops & Servers</title>
-        <meta name="description" content="Turn retired IT assets into cash. We buy used laptops, servers, monitors, and hard drives from businesses nationwide. Get a fast, free valuation today." />
-        <meta name="keywords" content="Sell IT equipment, corporate laptop buyback, sell used servers, IT asset recovery, bulk computer buyers, hard drive buyback, monitor recycling payout" />
+        {/* UPDATED: Brand Name First + "Corporate Buyback" Keyword */}
+        <title>IT Asset Solutions | Corporate IT Buyback & Asset Recovery</title>
+        
+        {/* UPDATED: Injected "IT asset solution" (singular) + "Cash for Laptops" */}
+        <meta name="description" content="The profitable IT asset solution for retired hardware. We provide corporate IT buyback for servers, laptops, and monitors with upfront cash offers." />
+        
+        {/* UPDATED: Brand Name & Competitor Variations */}
+        <meta name="keywords" content="IT Asset Solutions, IT Asset Solution, Sell IT equipment, corporate laptop buyback, sell used servers, IT asset recovery, bulk computer buyers" />
+        
         <link rel="canonical" href="https://www.itassetsolutions.com/services/corporate-it-buyback" />
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
       </Helmet>
@@ -264,7 +270,7 @@ const CorporateITBuybackPage: React.FC = () => {
               </p>
             </div>
             
-            {/* AI Image Trigger */}
+            {/* Visual Diagram: Accepted Hardware Categories */}
             
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
@@ -334,7 +340,7 @@ const CorporateITBuybackPage: React.FC = () => {
                   We stripped away the complexity. No auctions, no waiting for consignments. Just a direct purchase offer.
                 </p>
                 
-                {/* AI Diagram Trigger */}
+                {/* Visual Diagram: Process Steps */}
                 
 
                 <div className="space-y-8 mt-8">
@@ -372,6 +378,9 @@ const CorporateITBuybackPage: React.FC = () => {
                   <p className="text-slate-400">We don't cherry-pick. We bid on the whole lot.</p>
                 </div>
                 
+                {/* Visual Chart: Depreciation Curve */}
+                
+
                 <div className="grid grid-cols-2 gap-4 mt-8 relative z-10">
                   <div className="bg-white/10 p-4 rounded-xl backdrop-blur-sm border border-white/10">
                     <p className="text-2xl font-bold text-green-400 font-grotesk">$12M+</p>

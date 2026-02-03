@@ -94,9 +94,15 @@ const WholesaleITEquipmentPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Global Wholesale IT Equipment | Bulk Used Laptops & Monitors MI</title>
-        <meta name="description" content="Direct source for bulk used IT equipment in Farmington Hills, MI. We supply Grade A/B laptops, desktops, and monitors to global resellers. Pallet and container shipping available worldwide." />
-        <meta name="keywords" content="wholesale laptops Michigan, bulk used computers, export IT equipment, used monitors bulk, ITAD reseller, refurbished laptops wholesale, global IT supplier" />
+        {/* UPDATED: Brand Name First + Keyword Targeting */}
+        <title>IT Asset Solutions | Wholesale IT Equipment & Bulk Sales</title>
+        
+        {/* UPDATED: Injected "IT asset solution" (singular) + "Wholesale" */}
+        <meta name="description" content="Your premier wholesale IT asset solution. We supply bulk used laptops, servers, and monitors to global resellers. Container-ready inventory from Michigan." />
+        
+        {/* UPDATED: Brand Name & Industry Keywords */}
+        <meta name="keywords" content="IT Asset Solutions, IT Asset Solution, wholesale laptops Michigan, bulk used computers, export IT equipment, ITAD reseller, refurbished laptops wholesale" />
+        
         <link rel="canonical" href="https://www.itassetsolutions.com/wholesale-it-equipment" />
         {/* 2026 SPEED: Preconnect to Maps API */}
         <link rel="preconnect" href="https://maps.googleapis.com" />
@@ -289,8 +295,8 @@ const WholesaleITEquipmentPage: React.FC = () => {
               </p>
             </div>
             
-            {/* Visual Search: Sourcing Flow */}
-            <div className="sr-only"></div>
+            {/* Visual Diagram: Logistics Workflow */}
+            
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative mt-12">
               {/* Connecting Line (Desktop) */}
@@ -618,8 +624,11 @@ const WholesaleITEquipmentPage: React.FC = () => {
                 We utilize standard industry functional (F) and cosmetic (C) codes to describe inventory, ensuring you know exactly what you are buying.
               </p>
             </div>
+            
+            {/* Visual Diagram: Grading Standards */}
+            
 
-            <div className="bg-slate-800 rounded-3xl border border-slate-700 overflow-hidden shadow-2xl">
+            <div className="bg-slate-800 rounded-3xl border border-slate-700 overflow-hidden shadow-2xl mt-8">
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                   <thead>

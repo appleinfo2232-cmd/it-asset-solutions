@@ -87,9 +87,15 @@ const SecureChainOfCustodyLogisticsPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Secure Chain-of-Custody Logistics | GPS Tracked IT Transport</title>
-        <meta name="description" content="Eliminate data breach risks during transit. Our secure logistics feature locked trucks, GPS tracking, and 100% chain-of-custody documentation. Serving the USA." />
-        <meta name="keywords" content="secure IT logistics, chain of custody tracking, GPS IT transport, secure data transport Michigan, IT asset pickup service" />
+        {/* UPDATED: Brand Name First + "Secure Logistics" Keyword */}
+        <title>IT Asset Solutions | Secure Chain-of-Custody Logistics</title>
+        
+        {/* UPDATED: Injected "IT asset solution" (singular) + "GPS Tracked" */}
+        <meta name="description" content="The secure IT asset solution for transport. GPS-tracked logistics, locked trucks, and 100% chain-of-custody documentation for Michigan businesses." />
+        
+        {/* UPDATED: Added Brand Name & Competitor Variations */}
+        <meta name="keywords" content="IT Asset Solutions, IT Asset Solution, secure IT logistics, chain of custody tracking, GPS IT transport, secure data transport Michigan, IT asset pickup service" />
+        
         <link rel="canonical" href="https://www.itassetsolutions.com/services/secure-chain-of-custody-logistics" />
         {/* 2026 SPEED: Preconnect to Maps API */}
         <link rel="preconnect" href="https://maps.googleapis.com" />

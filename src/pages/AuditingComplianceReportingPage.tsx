@@ -82,9 +82,15 @@ const AuditingComplianceReportingPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Auditing & Compliance Reporting | NIST & HIPAA Documentation</title>
-        <meta name="description" content="Serialized IT asset auditing and compliance reporting. Get Certificates of Destruction and ESG reports. Audit-ready documentation aligned with HIPAA, SOX, and industry standards." />
-        <meta name="keywords" content="IT asset auditing, compliance reporting, certificate of destruction, ITAD documentation, HIPAA audit trail, ESG reporting Michigan, serialized asset tracking" />
+        {/* UPDATED: Brand Name First + "Auditing" Keyword */}
+        <title>IT Asset Solutions | Auditing & Compliance Reporting</title>
+        
+        {/* UPDATED: Injected "IT asset solution" (singular) + "Serialized Audit" */}
+        <meta name="description" content="Ensure compliance with IT Asset Solutions. Our serialized auditing provides the complete IT asset solution for HIPAA, SOX, and ESG reporting." />
+        
+        {/* UPDATED: Added Brand Name & Competitor Variations */}
+        <meta name="keywords" content="IT Asset Solutions, IT Asset Solution, IT asset auditing, compliance reporting, certificate of destruction, ITAD documentation, HIPAA audit trail" />
+        
         <link rel="canonical" href="https://www.itassetsolutions.com/services/auditing-compliance-reporting" />
         {/* 2026 SPEED: Preconnect to Maps API */}
         <link rel="preconnect" href="https://maps.googleapis.com" />
@@ -230,7 +236,7 @@ const AuditingComplianceReportingPage: React.FC = () => {
               </p>
             </div>
             
-            {/* AI Image Trigger */}
+            {/* Diagram: Benefits Visualization */}
             
 
             <div className="grid md:grid-cols-3 gap-8 mt-12">
@@ -283,7 +289,7 @@ const AuditingComplianceReportingPage: React.FC = () => {
                   We don't just "haul junk." We treat every asset as a data liability until it is proven sanitized. Here is how we maintain the chain of custody.
                 </p>
                 
-                {/* AI Diagram Trigger: Timeline */}
+                {/* Visual Diagram: Tracking Workflow */}
                 
 
                 <div className="space-y-8 relative mt-8">
@@ -370,7 +376,7 @@ const AuditingComplianceReportingPage: React.FC = () => {
               Our reporting structure is designed to satisfy the strict documentation requirements of heavily regulated industries.
             </p>
 
-            {/* AI Image Trigger: Regulatory logos */}
+            {/* Visual Diagram: Compliance Standards */}
             
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">

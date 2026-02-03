@@ -96,10 +96,15 @@ const ITAssetValueRecoveryPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>IT Asset Value Recovery | Remarketing & Revenue Share ITAD</title>
-        {/* UPDATED: "compliant" -> "aligned" */}
-        <meta name="description" content="Turn retired IT assets into capital. Our Value Recovery process tests, refurbishes, and resells your hardware. NIST-aligned data safety. Get a quote today." />
-        <meta name="keywords" content="IT asset value recovery, ITAD revenue share, sell used enterprise servers, laptop remarketing, corporate computer recycling ROI" />
+        {/* UPDATED: Brand Name First + "IT Asset Value Recovery" Keyword */}
+        <title>IT Asset Solutions | IT Asset Value Recovery & Remarketing</title>
+        
+        {/* UPDATED: Injected "IT asset solution" (singular) + "Maximize ROI" */}
+        <meta name="description" content="Maximize ROI with IT Asset Solutions. The complete IT asset solution for remarketing servers, laptops, and hardware. Direct buyout and revenue share models available." />
+        
+        {/* UPDATED: Added Brand Name & Competitor Variations */}
+        <meta name="keywords" content="IT Asset Solutions, IT Asset Solution, IT asset value recovery, ITAD revenue share, sell used enterprise servers, laptop remarketing, corporate computer recycling ROI" />
+        
         <link rel="canonical" href="https://www.itassetsolutions.com/services/it-asset-value-recovery" />
         {/* 2026 SPEED: Preconnect to Maps API */}
         <link rel="preconnect" href="https://maps.googleapis.com" />
@@ -170,11 +175,8 @@ const ITAssetValueRecoveryPage: React.FC = () => {
                     <BarChart3 className="w-8 h-8 text-emerald-500" />
                   </div>
                   
-                  {/* AI Diagram Trigger: Value Comparison */}
-                  
-
+                  {/* Visual representation of data for easy scanning */}
                   <div className="space-y-6 mt-4">
-                    {/* Visual representation of data for easy scanning */}
                     <div>
                       <div className="flex justify-between text-sm mb-2">
                         <span className="text-slate-300">Scrap Recycler (Raw Materials)</span>
@@ -240,9 +242,6 @@ const ITAssetValueRecoveryPage: React.FC = () => {
               </p>
             </div>
             
-            {/* AI Diagram Trigger: Workflow */}
-            
-
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
               {[
                 { 
