@@ -71,8 +71,15 @@ const AboutPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>{aboutPageSEO?.title || "About IT Asset Solutions | Secure ITAD & Remarketing"}</title>
-        <meta name="description" content={aboutPageSEO?.metaDescription || "Trusted by 675+ companies. We provide NIST-aligned data destruction and wholesale IT remarketing services in Farmington Hills, MI and nationwide."} />
+        {/* UPDATED: Brand Name First + Keyword Targeting */}
+        <title>About IT Asset Solutions | Enterprise ITAD & Remarketing Experts</title>
+        
+        {/* UPDATED: Description targets the singular "solution" keyword naturally */}
+        <meta name="description" content="Learn about IT Asset Solutions, Michigan's premier IT asset solution provider. We specialize in secure data destruction, wholesale remarketing, and global logistics." />
+        
+        {/* UPDATED: Keywords to include competitor variations */}
+        <meta name="keywords" content="About IT Asset Solutions, IT Asset Solution, ITAD Company Michigan, Wholesale IT Equipment, Data Destruction Company, Corporate Recycling Profile" />
+        
         <link rel="canonical" href="https://www.itassetsolutions.com/about" />
         <link rel="preload" as="image" href="https://grainy-gradients.vercel.app/noise.svg" />
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
