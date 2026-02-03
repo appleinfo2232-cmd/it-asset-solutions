@@ -90,8 +90,15 @@ const BlogPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Industry Insights & ITAD News | IT Asset Solutions</title>
-        <meta name="description" content="Expert insights on Enterprise ITAD, Data Destruction, and ESG reporting. Stay ahead of industry trends and regulatory updates." />
+        {/* UPDATED: Brand Name + Keyword Targeting for Industry Authority */}
+        <title>IT Asset Solutions Blog | ITAD Industry Insights & News</title>
+        
+        {/* UPDATED: Description targets singular "solution" and key topics */}
+        <meta name="description" content="Read the latest from IT Asset Solutions. Expert insights on the complete IT asset solution lifecycle, data security trends, and sustainable recycling practices." />
+        
+        {/* UPDATED: Keywords to include competitor variations and specific topics */}
+        <meta name="keywords" content="IT Asset Solutions Blog, IT Asset Solution News, ITAD Trends, Data Security Insights, Corporate Recycling Guide, ESG Reporting" />
+        
         <link rel="canonical" href="https://www.itassetsolutions.com/blog" />
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
       </Helmet>
