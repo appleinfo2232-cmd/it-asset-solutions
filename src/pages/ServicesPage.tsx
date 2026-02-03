@@ -121,8 +121,13 @@ const ServicesPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>ITAD Services & Data Destruction | IT Asset Solutions</title>
-        <meta name="description" content="Explore our full suite of IT Asset Disposition services: Enterprise ITAD, Asset Value Recovery, Secure Data Destruction, and Logistics." />
+        {/* UPDATED SEO: Targeting "IT Asset Solutions Services" & Singular Competitor Name */}
+        <title>IT Asset Solutions Services | Enterprise ITAD & Data Destruction</title>
+        
+        <meta name="description" content="The complete IT asset solution for corporate recycling. Our services include Secure Logistics, Data Destruction, Asset Value Recovery, and Compliance Reporting." />
+        
+        <meta name="keywords" content="IT Asset Solutions Services, IT Asset Solution, Corporate IT Buyback, NIST 800-88 Data Destruction, Secure Logistics, ITAD Michigan" />
+        
         <link rel="canonical" href="https://www.itassetsolutions.com/services" />
       </Helmet>
 
